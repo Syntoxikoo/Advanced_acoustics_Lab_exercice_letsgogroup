@@ -1,0 +1,114 @@
+function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
+    %Compute the Green's function for a rectangular duct. Uses the modal decomposition of a 3D plane wave, as described in: Fundamentals of Acoustics
+    % # Function configuration
+    % Parameters
+    % ----------
+    % duct_coord : array-like [x, y] Coordinates of the place inside the duct.
+    % rS : array-like [x, y, z] Coordinates of the source point.
+    % duct : array-like [lx, ly] Dimensions of the rectangular duct.
+    % f : array-like or double frequency of interest.
+    % N_modes [N,M] contains max n and m modes
+    % mode_list : [n,m] if given, it compute the green function for the
+    % specific modes given, the mode as to be given in the order
+    % Returns
+    % -------
+    % G : array-like
+    %     Computed Green's function values for the given frequencies and for given source - observation position.
+    arguments
+        duct_coord 
+        rS
+        zM
+        duct
+        f
+        N_modes = [10,10];
+        mode_list = [];
+        method = 1;
+    end
+    c0 = 343;
+    omega = 2*pi *f;
+    k = omega /c0;
+
+    
+    S = prod(duct);
+    lx = duct(1); ly = duct(2);
+    if length(duct_coord) ==2
+        if method == 1
+            if isempty(mode_list)
+                [nx, ny] = ndgrid(0:N_modes(1), 0:N_modes(2));
+                nx = nx(:);
+                ny = ny(:);
+                
+                en = ones(size(nx));
+                en(2:end) = en(2:end) .* 2;
+                em = ones(size(ny));
+                em(2:end) = em(2:end) .* 2;
+                
+                coefx = nx*pi/lx; coefy = ny * pi /ly;
+            
+                % fmn = c0/2 * sqrt(((0:N_modes(1))/lx).^2+((0:N_modes(2))/ly).^2);
+                % for ii = 1:length(fmn)
+                %     disp("the frequency cutoff of the duct is : f = "+ fmn() + " Hz")
+                % end
+            
+                phim_rS = sqrt(em.*en) .* cos(coefx .* rS(1)) .* cos(coefy.* rS(2));
+                phim_rM =  sqrt(em.*en) .* cos(coefx.* duct_coord(1)) .* cos(coefy.* duct_coord(2));
+            else
+                mode_list = mode_list';
+                if size(mode_list) ==2
+                    [nx, ny] = ndgrid(mode_list(:,1),mode_list(:,2));
+                else
+                    
+                    mode_list = cat(2,mode_list,zeros(size(mode_list)));
+                    [nx, ny] = ndgrid(mode_list(:,1),mode_list(:,2));
+                end
+                    nx = nx(:);
+                    ny = ny(:);
+                    en = ones(size(nx)).* 2;
+                    em = ones(size(ny)).* 2;
+                    if mode_list(1,1) == 0
+                        en(1) = 1;
+                    end
+                    if mode_list(1,2)== 0
+                        em(1) = 1;
+                    end
+                    
+                coefx = nx*pi/lx; coefy = ny * pi /ly;
+                    
+                phim_rS = sqrt(em.*en) .* cos(coefx .* rS(1)) .* cos(coefy.* rS(2));
+                phim_rM =  sqrt(em.*en) .* cos(coefx.* duct_coord(1)) .* cos(coefy.* duct_coord(2));
+            end
+            G = zeros(length(zM),length(f));
+            
+            for ii = 1:length(f)
+                kzmn = -sqrt(k(ii).^2 - coefx.^2  - coefy.^2); 
+                G(:,ii) = sum((phim_rS .*phim_rM ./ kzmn) .* exp(- 1j* kzmn.*(zM-rS(3))));
+            end
+        else
+        G = zeros(length(zM),length(f));
+            for nn= 0:N_modes(1)
+                for mm = 0:N_modes(2)
+                    if mm==0
+                        em =1;
+                    else
+                        em = 2;
+                    end
+                    if nn==0
+                        en =1;
+                    else
+                        en = 2;
+                    end
+                    coefx = nn*pi/lx; coefy = mm * pi /ly;
+                    phim_rS = sqrt(em.*en) .* cos(coefx .* rS(1)) .* cos(coefy.* rS(2));
+                    phim_rM =  sqrt(em.*en) .* cos(coefx.* duct_coord(1)) .* cos(coefy.* duct_coord(2));
+                    kzmn = -sqrt(k.^2 - coefx.^2  - coefy.^2); 
+                    for ii = 1: length(f)
+                        G(:,ii) = G(:,ii) + ((phim_rS .*phim_rM ./ kzmn(ii)) .* exp(- 1j* kzmn(ii).*(zM'-rS(3))));
+                    end
+                end
+            end
+        end
+    else
+        
+    G = -1j/S *G;            
+end
+    
