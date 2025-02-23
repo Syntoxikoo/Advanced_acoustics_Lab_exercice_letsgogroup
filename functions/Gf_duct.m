@@ -1,5 +1,5 @@
 function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
-    %Compute the Green's function for a rectangular duct. Uses the modal decomposition of a 3D plane wave, as described in: Fundamentals of Acoustics
+    %Compute the Green's function for a rectangular duct. Uses the modal decomposition of a 3D plane wave, as described in: 
     % # Function configuration
     % Parameters
     % ----------
@@ -28,7 +28,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
     omega = 2*pi *f;
     k = omega /c0;
 
-    
+    N_modes = constrain_modes(N_modes,duct,f);
     S = prod(duct);
     lx = duct(1); ly = duct(2);
     if length(duct_coord) ==2
@@ -158,6 +158,39 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
             end
             disp("processing the green function for the cross section : "+ll+"/"+length(duct_coord(:,1)))
         end
-    G = -1j/S *G;            
+    end
+    G = -1j/S *G;             
 end
     
+
+function N_modes = constrain_modes(N_modes,duct,f)
+    % Limite the number of modes calculated in function of the frequency range
+    % Input:
+    %   - N_modes: number of modes [n,m]
+    %   - duct: length of the cross-section of the duct [lx,ly]
+    %   - f : frequency of interest (or array)
+    % Output:
+    %   - N_modes: modes limited
+    if isscalar(f)
+        fmax = f;
+    else
+        fmax =(f(end));
+    end
+       
+    c0 = 343;
+    nx_max = fmax/c0 *2*pi*duct(1);
+    ny_max = fmax/c0 *2*pi*duct(2);
+
+    f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2+(nx_max/duct(2))^2);
+    
+    while f_mode_max > fmax
+        nx_max =nx_max-1;
+        ny_max =ny_max-1;
+        f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2+(nx_max/duct(2))^2);
+    
+    end
+    if N_modes(1)>nx_max && N_modes(2)>ny_max
+        N_modes = [nx_max,ny_max];
+    end
+
+end
