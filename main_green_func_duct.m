@@ -11,15 +11,12 @@ z = linspace(0,1,10);
 f = linspace(100,1000,100);
 
 N_modes = [40,40];
-xM = 1; yM = 1;
-rS = [0.,0.,0];
+xM = 1; yM = 1; % receiver
+rS = [0.,0.,0]; %source
 
-G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[1;0 ],1);
+G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[1;0 ],1); % use either N_modes array and empty 
 
-figure;
 plot(f,20*log10(abs(G)/2e-5))
-
-
 
 
 % -------------------------------------------
@@ -36,13 +33,13 @@ z=1;
 % xM = 1; yM = 1;
 xM = linspace(0,lx,100);
 yM = linspace(0,ly,100);
-rS = [0.,0.,0];
+rS = [0.5,0.5,0];
 f = diag(fmn);
 f(1) = 100;
-%% Compute
+% Compute
 G = Gf_duct([xM;yM]',rS, z, [lx,ly], f, N_modes);
 
-%% Plot
+% Plot
 
 idx= [1,2,3,4];
 plot_cross_sec

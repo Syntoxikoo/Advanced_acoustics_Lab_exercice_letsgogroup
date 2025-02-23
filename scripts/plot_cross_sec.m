@@ -38,7 +38,7 @@ title("Modes: n_x=1,n_y=1");
 % ------------------------------------- third Tile ---------------------------------------------------------
 nexttile 
 
-contourf(xM,yM,(abs(G(:,:,idx(4)))))
+contourf(xM,yM,(abs(G(:,:,idx(3)))))
 % Set axis limits 
 ylim([0 1]) 
 xlim([0 1]) 
