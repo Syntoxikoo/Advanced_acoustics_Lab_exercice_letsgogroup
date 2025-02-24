@@ -14,11 +14,10 @@ corder = colororder;
 nexttile
 G1 = abs(G(:,:,idx(2))/max(G(:,:,idx(2)),[],'all'));
 contourf(xM,yM,G1)
-
 % Set axis limits 
 ylim([0 ly]) 
 xlim([0 lx]) 
-
+% lim([min(abs(G(:,:,idx(2))),[],'all') max(abs(G(:,:,idx(2))),[], 'all')])
 
 % Add title 
 title("Modes: n_x=1,n_y=1");
@@ -28,11 +27,10 @@ title("Modes: n_x=1,n_y=1");
 ax2 = nexttile ;
 G2 = abs(G(:,:,idx(3))/max(G(:,:,idx(3)),[],'all'));
 contourf(xM,yM,G2)
-
 % Set axis limits 
 ylim([0 ly]) 
 xlim([0 lx]) 
-
+% clim([min(abs(G(:,:,idx(3))),[],'all') max(abs(G(:,:,idx(3))),[], 'all')])
 
 % Add title 
 title("Modes: n_x=2,n_y=2");
@@ -54,4 +52,4 @@ c = colorbar(ax2);
 c.Label.String = '|P| norm';
 c.Label.FontSize = ftsize;
 % Save the figure in EPS format (modify file name)
-saveas(gcf, 'figures/cross_sec_2modes_srcMid.eps', "epsc");
+saveas(gcf, 'figures/cross_sec_2modes.eps', "epsc");

@@ -21,7 +21,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
         zM
         duct
         f
-        N_modes = [10,10]; % Default mode numbers if not specified.
+        N_modes = [20,20]; % Default mode numbers if not specified.
         mode_list = []; % Default: compute all modes.
         method = 1; % Default method.
     end
@@ -102,6 +102,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                 kzmn = -sqrt(k(ii).^2 - coefx.^2 - coefy.^2); 
                 G(:,ii) = sum((phim_rS .* phim_rM ./ kzmn) .* exp(-1j * kzmn .* (zM - rS(3))));
             end
+
         else
             % Method 2: Alternative approach to compute Green's function
             G = zeros(length(zM), length(f));
@@ -124,6 +125,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                 end
             end
         end
+
     else
         % If a full cross-section is given, enforce scalar zM
         assert(isscalar(zM), "You need to fix a point in the tube to observe pressure across cross section")
@@ -152,7 +154,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                 phim_rM = sqrt(em .* en) .* cos(coefx .* duct_coord(ll,1)) .* cos(coefy .* duct_coord(jj,2));
 
                 for ii = 1:length(f)
-                    kzmn = sqrt(k(ii).^2 - coefx.^2 - coefy.^2);
+                    kzmn = -sqrt(k(ii).^2 - coefx.^2 - coefy.^2);
                     G(ll,jj,ii) = sum((phim_rS .* phim_rM ./ (kzmn+1e-9)) .* exp(-1j * kzmn .* (zM - rS(3))));
                 end
             end
