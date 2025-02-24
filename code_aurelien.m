@@ -2,18 +2,18 @@
 c_0 = 343 ;
 rho_0 = 1.2 ;
 
-x_0 = 0.13 ;
-y_0 = 0.43 ;
+x_0 = 0 ;
+y_0 = 0 ;
 r_0 = [x_0, y_0, 0] ;
-x = 0.38 ;
-y = 0.69 ;
+x = 0.5 ;
+y = 0.5 ;
 r = [x, y, 0] ;
-a = 0.45 ; %height
-b = 0.5 ; %width
+a = 1 ; %height
+b = 1 ; %width
 S = a*b ; %cross-sectional area
 
-n_max = 10 ;
-m_max = 10 ;
+n_max = 40 ;
+m_max = 40 ;
 
 %% fixed freq, over z
 
@@ -61,7 +61,7 @@ title('Pressure in function of distance') ;
 f = linspace(1,1000,1000-1) ; %frequency (we take on point off 
 % to not land on infinite points)
 
-z = 0.03;
+z = 0.1;
 
 G = zeros(1, length(f));
 
