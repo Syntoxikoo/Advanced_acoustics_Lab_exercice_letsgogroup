@@ -28,7 +28,7 @@ fmn = compute_modes(lx,ly,N_modes);
 
 % f= 500; the result is clean
 
-z=1;
+z=0;
 
 % xM = 1; yM = 1;
 xM = linspace(0,lx,100);

@@ -148,7 +148,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
         % Compute Green's function for all positions in the cross-section
         phim_rS = sqrt(em .* en) .* cos(coefx .* rS(1)) .* cos(coefy .* rS(2));
         G = zeros(length(duct_coord(:,1)), length(duct_coord(:,2)), length(f));
-
+        
         for ll = 1:length(duct_coord(:,1))
             for jj = 1:length(duct_coord(:,2))
                 phim_rM = sqrt(em .* en) .* cos(coefx .* duct_coord(ll,1)) .* cos(coefy .* duct_coord(jj,2));
