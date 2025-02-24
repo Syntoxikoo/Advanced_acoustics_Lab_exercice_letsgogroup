@@ -44,11 +44,5 @@ G = Gf_duct([xM;yM]',rS, z, [lx,ly], f, N_modes);
 idx= [1,2,3,4];
 plot_cross_sec
 
-%%
+%% plot green function freq
 
-z=1;
-f = linspace(0,10000,1000);
-N_modes = [20,20];
-G = Gf_duct([0.5,0.5],rS, z, [lx,ly], f, N_modes);
-
-plot(f, 20* log10(abs(G)))

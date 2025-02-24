@@ -33,7 +33,6 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
 
     % Constrain the number of modes based on frequency
     N_modes = constrain_modes(N_modes,duct,f);
-
     % Compute the duct cross-sectional area
     S = prod(duct);
     lx = duct(1); 

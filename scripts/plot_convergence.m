@@ -1,6 +1,6 @@
 % Define the number of rows and columns for tiled layout
 nrows = 1;
-ncols = 2;
+ncols = 1;
 heightScale = 0.5; % Adjust height scaling if needed
 
 % ------------------------------------------------------------------------------------------------------------
@@ -12,32 +12,24 @@ corder = colororder;
 
 % ------------------------------------- First Tile ------------------------------------------------------------
 nexttile
-G1 = abs(G(:,:,idx(2))/max(G(:,:,idx(2)),[],'all'));
-contourf(xM,yM,G1)
+
+% Set X Y...
+Leg(1) = plot(nx,conv ,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+
+grid on; hold on;
+
+% Leg(2) = plot(X, Y,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
+hold off
 % Set axis limits 
-ylim([0 ly]) 
-xlim([0 lx]) 
-% lim([min(abs(G(:,:,idx(2))),[],'all') max(abs(G(:,:,idx(2))),[], 'all')])
+% ylim([0, 1]) 
+xlim([0, nx(end)]) 
 
 % Add title 
-title("Modes: n_x=1,n_y=1");
+% title('First Tile Title');
 
-
-% ------------------------------------- Second Tile ---------------------------------------------------------
-ax2 = nexttile ;
-G2 = abs(G(:,:,idx(3))/max(G(:,:,idx(3)),[],'all'));
-contourf(xM,yM,G2)
-% Set axis limits 
-ylim([0 ly]) 
-xlim([0 lx]) 
-% clim([min(abs(G(:,:,idx(3))),[],'all') max(abs(G(:,:,idx(3))),[], 'all')])
-
-% Add title 
-title("Modes: n_x=2,n_y=2");
-
-
-
-
+% Uncomment these if individual tile labels are preferred
+xlabel('Number of modes');
+ylabel('|error|^2');
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
@@ -45,11 +37,11 @@ title("Modes: n_x=2,n_y=2");
 % leg.Layout.Tile = 'north'; 
 
 % Add common X and Y axis labels for all tiles
-xlabel(tiled, 'x (m)');
-ylabel(tiled, 'y (m)');
-ftsize = get(tiled.XLabel, 'FontSize');
-c = colorbar(ax2);
-c.Label.String = '|P| norm';
-c.Label.FontSize = ftsize;
+xlabel(tiled, 'Common X-axis Label');
+ylabel(tiled, 'Common Y-axis Label');
+
 % Save the figure in EPS format (modify file name)
-saveas(gcf, 'figures/cross_sec_2modes.eps', "epsc");
+saveas(gcf, 'figures/namefig.eps', "epsc");
+
+
+% OI
