@@ -16,7 +16,7 @@ else
     lowest_fc = c / (2 * ly);
 end
 N_modes = [4,4];
-xM = 0.7; yM = 1; % receiver
+xM = lx; yM = ly; % receiver
 rS = [0,0,0]; % source
 fmn = compute_modes(lx, ly, N_modes);
 
@@ -33,7 +33,7 @@ for n = 1:size(G, 1)
     plot(f, 20*log10(abs(G(n, :)) / 2e-5), 'LineWidth', 2);
 end
 
-% Add vertical dotted lines at frequencies closest to fmn
+%add vertical dotted lines at frequencies closest to fmn
 for k = 1:numel(fmn)
     [~, idx] = min(abs(f - fmn(k))); % Find closest frequency in f
     xline(f(idx), 'k:', 'LineWidth', 1.5); % Black dotted line
