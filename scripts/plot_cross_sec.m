@@ -13,7 +13,7 @@ corder = colororder;
 % ------------------------------------- First Tile ------------------------------------------------------------
 nexttile
 G1 = abs(G(:,:,idx(2))/max(G(:,:,idx(2)),[],'all'));
-contourf(xM,yM,abs(G(:,:,idx(2))))
+contourf(xM,yM,G1)
 
 % Set axis limits 
 % ylim([0 ly]) 
@@ -26,8 +26,8 @@ title("Modes: n_x=1,n_y=1");
 
 % ------------------------------------- Second Tile ---------------------------------------------------------
 ax2 = nexttile ;
-% G2 = abs(G(:,:,idx(3))/max(G(:,:,idx(3)),[],'all'));
-contourf(xM,yM,abs(G(:,:,idx(3))))
+G2 = abs(G(:,:,idx(3))/max(G(:,:,idx(3)),[],'all'));
+contourf(xM,yM,G2)
 
 % Set axis limits 
 ylim([0 ly]) 

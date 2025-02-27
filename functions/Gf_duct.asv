@@ -146,8 +146,8 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
             % Use specific mode list if provided
                 mode_list = mode_list';
                 
-                en = ones(length(mode_list(:,1))) * 2;
-                em = ones(length(mode_list(:,1))) * 2;
+                en = ones(length(mode_list())) * 2;
+                em = ones(size(ny)) * 2;
 
                 % Correct normalization for fundamental modes
                 if mode_list(1,1) == 0
@@ -157,8 +157,8 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                     em(1) = 1;
                 end
                 
-                coefx = mode_list(:,1)*pi/lx; 
-                coefy = mode_list(:,2)*pi/ly;
+                coefx = nx*pi/lx; 
+                coefy = ny*pi/ly;
         end
 
         % Compute Green's function for all positions in the cross-section
@@ -170,13 +170,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                 phim_rM = sqrt(em .* en) .* cos(coefx .* duct_coord(ll,1)) .* cos(coefy .* duct_coord(jj,2));
 
                 for ii = 1:length(f)
-                    if ~isempty(mode_list)
-                        phim_rM = sqrt(em(ii) .* en(ii)) .* cos(coefx(ii) .* duct_coord(ll,1)) .* cos(coefy(ii) .* duct_coord(jj,2));
-                        phim_rS = sqrt(em(ii) .* en(ii)) .* cos(coefx(ii) .* rS(1)) .* cos(coefy(ii) .* rS(2));
-                        kzmn = -sqrt(k(ii).^2 - coefx(ii).^2 - coefy(ii).^2);
-                    else
-                        kzmn = -sqrt(k(ii).^2 - coefx.^2 - coefy.^2);
-                    end
+                    kzmn = -sqrt(k(ii).^2 - coefx.^2 - coefy.^2);
                     G(ll,jj,ii) = sum((phim_rS .* phim_rM ./ (kzmn+1e-9)) .* exp(-1j * kzmn .* (zM - rS(3))));
                 end
             end
