@@ -99,7 +99,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
             % Compute Green's function for each frequency
             for ii = 1:length(f)
                 kzmn = -sqrt(k(ii).^2 - coefx.^2 - coefy.^2); 
-                G(:,ii) = sum((phim_rS .* phim_rM ./ kzmn) .* exp(-1j * kzmn .* (zM - rS(3))));
+                G(:,ii) = sum((phim_rS .* phim_rM ./ (kzmn+1e-6)) .* exp(-1j * kzmn .* (zM - rS(3))));
             end
 
         else
@@ -115,11 +115,11 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
                     
                     phim_rS = sqrt(em .* en) .* cos(coefx .* rS(1)) .* cos(coefy .* rS(2));
                     phim_rM = sqrt(em .* en) .* cos(coefx .* duct_coord(1)) .* cos(coefy .* duct_coord(2));
-
+                    
                     kzmn = -sqrt(k.^2 - coefx.^2 - coefy.^2); 
 
                     for ii = 1:length(f)
-                        G(:,ii) = G(:,ii) + ((phim_rS .* phim_rM ./ kzmn(ii)) .* exp(-1j * kzmn(ii) .* (zM' - rS(3))));
+                        G(:,ii) = G(:,ii) + ((phim_rS .* phim_rM ./ (kzmn(ii)+1e-6)) .* exp(-1j * kzmn(ii) .* (zM' - rS(3))));
                     end
                 end
             end

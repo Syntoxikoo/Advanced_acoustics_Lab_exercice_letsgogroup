@@ -14,7 +14,8 @@ corder = colororder;
 nexttile
 
 % Set X Y...
-Leg(1) = plot(nx,conv ,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+Leg(1) = plot(nx,conv,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+set(gca, 'YScale', 'log')
 
 grid on; hold on;
 
