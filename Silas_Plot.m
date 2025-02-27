@@ -1,6 +1,6 @@
 % Silas Plot
 clear;
-close all;
+%close all;
 clc;
 addpath(genpath('scripts'))
 addpath(genpath("functions"))
@@ -11,9 +11,12 @@ a = 1;
 b = 0.7;
 duct=[a, b];
 
+% Eliot constraint
+constrain=false;
+
 % max m and n
-M = 100;
-N = 100;
+M = 60;
+N = 60;
 N_modes=[N, M];
 
 % set frequency
@@ -56,8 +59,8 @@ z= linspace(0,10,1000);
 
 % Calculate Green's function
 
-Gz1 = Gf_duct(rec,r0,z,duct,f1,N_modes,[],1,false);
-Gz2 = Gf_duct(rec,r0,z,duct,f2,N_modes,[],1,false);
+Gz1 = Gf_duct(rec,r0,z,duct,f1,N_modes,[],1,constrain);
+Gz2 = Gf_duct(rec,r0,z,duct,f2,N_modes,[],1,constrain);
 
 
 
@@ -107,13 +110,13 @@ z2= 10;
 r1=[x, y, z1];
 r2=[x, y, z2];
 
-f=linspace(0,400,1000);
+f=linspace(0,800,1000);
 
 
 
 
-Gf1 = Gf_duct(rec,r0,z1,duct,f,N_modes,[],1,false);
-Gf2 = Gf_duct(rec,r0,z2,duct,f,N_modes,[],1,false);
+Gf1 = Gf_duct(rec,r0,z1,duct,f,N_modes,[],1,constrain);
+Gf2 = Gf_duct(rec,r0,z2,duct,f,N_modes,[],1,constrain);
 
 
 
