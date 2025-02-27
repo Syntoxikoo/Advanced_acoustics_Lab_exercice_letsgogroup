@@ -7,21 +7,23 @@ addpath figures/
 
 %% PLOT VARYING FREQ AND VARYING Z POSITION
 %VARY F
-c=343;
-lx = 0.63; ly = 0.2;
-if lx>=ly
-    lowest_fc = c/(2*lx);
+c = 343;
+
+lx = 0.7; ly = 1;
+if lx >= ly
+    lowest_fc = c / (2 * lx);
 else
-    lowest_fc = c/(2*ly);
+    lowest_fc = c / (2 * ly);
 end
-N_modes = [10,10];
-xM = 0.7; yM = 0.44; % receiver
-rS = [0.21,0.59,0]; %source
+N_modes = [4,4];
+xM = 0.7; yM = 1; % receiver
+rS = [0,0,0]; % source
+fmn = compute_modes(lx, ly, N_modes);
 
-z = linspace(5,1,2);
-f = linspace(1,1000,1000-1) ;
+z = linspace(5,0.01,2);
+f = linspace(1,1000,1000-1);
 
-G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[],1);
+G = Gf_duct([xM, yM], rS, z, [lx, ly], f, N_modes, [], 1);
 
 figure(1);
 clf;
@@ -29,6 +31,12 @@ hold on;
 
 for n = 1:size(G, 1)
     plot(f, 20*log10(abs(G(n, :)) / 2e-5), 'LineWidth', 2);
+end
+
+% Add vertical dotted lines at frequencies closest to fmn
+for k = 1:numel(fmn)
+    [~, idx] = min(abs(f - fmn(k))); % Find closest frequency in f
+    xline(f(idx), 'k:', 'LineWidth', 1.5); % Black dotted line
 end
 
 grid on;
@@ -44,7 +52,8 @@ legend(legendStrings, 'FontSize', 14, 'Location', 'best');
 
 set(gca, 'FontSize', 14);
 hold off;
-%%
+
+%
 % VARY Z
 z = linspace(0,10,1000-1) ;
 f = linspace(lowest_fc-20,10*lowest_fc,2) ;
@@ -74,15 +83,11 @@ legend(legendStrings, 'FontSize', 14, 'Location', 'best');
 set(gca, 'FontSize', 14);
 hold off;
 
-
 %% add the 3D distance/freq plot + the 3D surface plot
 
-lx = 0.63; ly = 0.2;
 z = linspace(0,5,2500-1) ;
 f = linspace(1,1000,2500-1) ;
 N_modes = [10,10];
-xM = 0.7; yM = 0.44; % receiver
-rS = [0.21,0.59,0]; %source
 
 G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[],1);
 
