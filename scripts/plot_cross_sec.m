@@ -16,8 +16,8 @@ G1 = abs(G(:,:,idx(2))/max(G(:,:,idx(2)),[],'all'));
 contourf(xM,yM,G1)
 
 % Set axis limits 
-ylim([0 ly]) 
-xlim([0 lx]) 
+% ylim([0 ly]) 
+% xlim([0 lx]) 
 
 
 % Add title 
