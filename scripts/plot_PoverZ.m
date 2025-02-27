@@ -45,8 +45,8 @@ z= linspace(0,10,1000);
 
 
 % Calculate Green's function
-Gz1 = 1j*w1*rho*Gf_duct(rec,r0,z,duct,f1,N_modes,[],1,constrain);
-Gz2 = 1j*w2*rho*Gf_duct(rec,r0,z,duct,f2,N_modes,[],1,constrain);
+Gz1 = Gf_duct(rec,r0,z,duct,f1,N_modes,[],1,constrain);
+Gz2 = Gf_duct(rec,r0,z,duct,f2,N_modes,[],1,constrain);
 % log of Green's function
 LGz1=20*log10(abs(Gz1)/p0);
 LGz2=20*log10(abs(Gz2)/p0);

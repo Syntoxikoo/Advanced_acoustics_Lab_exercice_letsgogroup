@@ -41,14 +41,14 @@ w=2*pi*f;
 Gf11 = Gf_duct(rec1,r01,z1,duct,f,N_modes,[],1,constrain);
 Gf12 = Gf_duct(rec1,r01,z2,duct,f,N_modes,[],1,constrain);
 
-LGf11=20*log10(abs(1j.*w.*rho.*Gf11)/p0);
-LGf12=20*log10(abs(1j.*w.*rho.*Gf12)/p0);
+LGf11=20*log10(abs(Gf11)/p0);
+LGf12=20*log10(abs(Gf12)/p0);
 
 Gf21 = Gf_duct(rec2,r02,z1,duct,f,N_modes,[],1,constrain);
 Gf22 = Gf_duct(rec2,r02,z2,duct,f,N_modes,[],1,constrain);
 
-LGf21=20*log10(abs(1j.*w.*rho.*Gf21)/p0);
-LGf22=20*log10(abs(1j.*w.*rho.*Gf22)/p0);
+LGf21=20*log10(abs(Gf21)/p0);
+LGf22=20*log10(abs(Gf22)/p0);
 
 % Define the number of rows and columns for tiled layout
 nrows = 1;
@@ -62,7 +62,7 @@ fig = figure("Position", [0, 0, columnwidth*1.5, height], "Units", "points");
 tiled = tiledlayout(nrows, ncols, "TileSpacing", "tight", "Padding", "loose");
 corder = colororder;
 
-limy=[100 200];
+limy=[70 140];
 
 % ------------------------------------- First Tile ------------------------------------------------------------
 nexttile
