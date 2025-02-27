@@ -1,4 +1,4 @@
-function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
+function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method,stop)
     % Compute the Green's function for a rectangular duct.
     % Uses modal decomposition of a 3D plane wave.
 
@@ -24,6 +24,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
         N_modes = [20,20]; % Default mode numbers if not specified.
         mode_list = []; % Default: compute all modes.
         method = 1; % Default method.
+        stop = true
     end
 
     % Constants
@@ -32,7 +33,7 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
     k = omega / c0;  % Wavenumber
 
     % Constrain the number of modes based on frequency
-    N_modes = constrain_modes(N_modes,duct,f);
+    N_modes = constrain_modes(N_modes,duct,f,stop);
     % Compute the duct cross-sectional area
     S = prod(duct);
     lx = duct(1); 
@@ -189,7 +190,10 @@ function G = Gf_duct(duct_coord,rS,zM,duct, f,N_modes,mode_list, method)
 end
 
 % Function to limit the number of modes based on frequency
-function N_modes = constrain_modes(N_modes, duct, f)
+function N_modes = constrain_modes(N_modes, duct, f,stop)
+    if nargin < 4
+        stop = false;
+    end
     if isscalar(f)
         fmax = f;
     else
@@ -199,13 +203,15 @@ function N_modes = constrain_modes(N_modes, duct, f)
     c0 = 343;
     nx_max = fmax/c0 * 2*pi * duct(1);
     ny_max = fmax/c0 * 2*pi * duct(2);
-
-    f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2 + (nx_max/duct(2))^2);
     
-    while f_mode_max > fmax
-        nx_max = nx_max - 1;
-        ny_max = ny_max - 1;
-        f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2 + (nx_max/duct(2))^2);
+    
+    f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2 + (nx_max/duct(2))^2);
+    if stop == true
+        while f_mode_max > fmax
+            nx_max = nx_max - 1;
+            ny_max = ny_max - 1;
+            f_mode_max = c0/2 * sqrt((nx_max/duct(1))^2 + (nx_max/duct(2))^2);
+        end
     end
 
     N_modes = min(N_modes, [nx_max, ny_max]);

@@ -15,7 +15,7 @@ nexttile
 
 % Set X Y...
 Leg(1) = plot(nx,conv,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
-set(gca, 'YScale', 'log')
+% set(gca, 'YScale', 'log')
 
 grid on; hold on;
 
@@ -23,7 +23,7 @@ grid on; hold on;
 hold off
 % Set axis limits 
 % ylim([0, 1]) 
-xlim([0, nx(end)]) 
+xlim([0, 60]) 
 
 % Add title 
 % title('First Tile Title');
@@ -38,11 +38,11 @@ ylabel('|error|^2');
 % leg.Layout.Tile = 'north'; 
 
 % Add common X and Y axis labels for all tiles
-xlabel(tiled, 'Common X-axis Label');
-ylabel(tiled, 'Common Y-axis Label');
+% xlabel(tiled, 'Common X-axis Label');
+% ylabel(tiled, 'Common Y-axis Label');
 
 % Save the figure in EPS format (modify file name)
-saveas(gcf, 'figures/namefig.eps', "epsc");
+saveas(gcf, 'figures/convergence.eps', "epsc");
 
 
 % OI

@@ -26,12 +26,8 @@ lx = 0.7; ly = 1;
 N_modes = [5,5];
 fmn = compute_modes(lx,ly,N_modes);
 
-
-% f= 500; the result is clean
-
 z=0;
 
-% xM = 1; yM = 1;
 xM = linspace(0,lx,100);
 yM = linspace(0,ly,100);
 rS = [0.35,0.5,0];
@@ -41,9 +37,10 @@ f(1) = 10;
 G = Gf_duct([xM;yM]',rS, z, [lx,ly], f, N_modes);
 
 % Plot
-
 idx= [1,2,3,4];
 plot_cross_sec
 
-%% plot green function freq
+%% plot green function convergence
+compute_convergence
+plot_convergence
 
