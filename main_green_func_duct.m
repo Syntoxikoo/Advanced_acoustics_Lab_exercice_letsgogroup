@@ -8,14 +8,17 @@ addpath datas/
 
 %% Observe only certain mode
 lx = 1; ly = 1;
-z = linspace(0,1,10);
-f = linspace(100,1000,100);
+% z = linspace(0,1,10);
+z=0.1;
+f = linspace(1,1000,1000-1) ;
 
 N_modes = [40,40];
 xM = 1; yM = 1; % receiver
 rS = [0.,0.,0]; %source
 
-G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[1;0 ],1); % use either N_modes array and empty 
+%G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[1;0],1); % use either N_modes array and empty 
+G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[],2); % use either N_modes array and empty 
+
 
 plot(f,20*log10(abs(G)/2e-5))
 
