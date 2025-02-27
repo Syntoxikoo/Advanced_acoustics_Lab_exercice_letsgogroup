@@ -5,6 +5,7 @@ clc;
 addpath(genpath('scripts'))
 addpath(genpath("functions"))
 addpath figures/
+addpath datas/
 
 % set duct dimensions
 a = 1;
