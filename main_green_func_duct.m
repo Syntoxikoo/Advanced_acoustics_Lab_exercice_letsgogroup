@@ -44,3 +44,19 @@ plot_cross_sec
 compute_convergence
 plot_convergence
 
+%%
+lx = 0.7; ly = 1;
+N_modes = [5,5];
+
+z=0;
+f = linspace(0,770,1000);
+xM = 0;
+yM = 0;
+rS = [0,0,0];
+
+% Compute
+G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes);
+
+
+figure;
+plot(f,20*log10(abs(G)/2e-5))

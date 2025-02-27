@@ -42,8 +42,8 @@ rS = [0.,0.,0]; %source
 
 G_full = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[],1,false); % use either N_modes array and empty 
 
-nx = linspace(0,60,10);
-ny = linspace(0,60,100);
+nx = linspace(0,60,60);
+ny = linspace(0,60,60);
 
 conv = zeros(length(nx),length(ny),1);
 
@@ -62,4 +62,6 @@ end
 
 %%
 figure;
-contourf(nx,ny,conv,15)
+surf(nx,ny,10*log10(conv))
+xlim
+% set(gca,'Xscale','log')

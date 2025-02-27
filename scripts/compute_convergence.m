@@ -26,7 +26,7 @@ for ii= 1:length(nx)
         end
 end
 % save convergence_z02D.mat conv
-
+% 
 % load convergence_z0.mat
 %% Plot convergence 1D for trial
 plot_convergence
@@ -60,8 +60,9 @@ for ii= 1:length(nx)
     end
 end
 
+
 %%
 figure;
-contourf(nx,ny,10*log10(conv))
+surf(nx,ny,10*log10(conv))
 xlim
 % set(gca,'Xscale','log')
