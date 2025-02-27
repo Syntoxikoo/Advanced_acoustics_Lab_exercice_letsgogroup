@@ -14,28 +14,28 @@ corder = colororder;
 nexttile
 
 % Set X Y...
-Leg(1) = plot(nx,conv,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+Leg(1) = plot(nx,convf,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
 % set(gca, 'YScale', 'log')
 % xlim([])
 
 grid on; hold on;
 
-% Leg(2) = plot(X, Y,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
+Leg(2) = plot(nx, convz,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 hold off
 % Set axis limits 
 % ylim([0, 1]) 
-xlim([0, 60]) 
+xlim([0, nx(end)]) 
 
 % Add title 
 % title('First Tile Title');
 
 % Uncomment these if individual tile labels are preferred
-xlabel('Number of modes');
+xlabel('Number of modes (n,m)');
 ylabel('|error|^2');
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
-% leg = legend(Leg, 'Dataset 1', 'Dataset 2', 'NumColumns', 2); 
+leg = legend('z fixed', 'f fixed', 'NumColumns', 2); 
 % leg.Layout.Tile = 'north'; 
 
 % Add common X and Y axis labels for all tiles

@@ -1,11 +1,11 @@
 % Define the number of rows and columns for tiled layout
 nrows = 1;
 ncols = 1;
-heightScale = 1.0; % Adjust height scaling if needed
+heightScale = 0.5; % Adjust height scaling if needed
 
 % ------------------------------------------------------------------------------------------------------------
 [columnwidth, ~] = get_widths();
-height = get_height() * 1.0; 
+height = get_height() * heightScale; 
 fig = figure("Position", [0, 0, columnwidth, height], "Units", "points");
 tiled = tiledlayout(nrows, ncols, "TileSpacing", "tight", "Padding", "loose");
 corder = colororder;
