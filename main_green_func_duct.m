@@ -33,7 +33,7 @@ z=0;
 
 xM = linspace(0,lx,100);
 yM = linspace(0,ly,100);
-rS = [0.35,0.5,0];
+rS = [lx/4,ly/2,0];
 f = diag(fmn);
 f(1) = 10;
 % Compute

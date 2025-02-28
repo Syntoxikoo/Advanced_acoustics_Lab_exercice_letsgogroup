@@ -54,4 +54,4 @@ c = colorbar(ax2);
 c.Label.String = '|P| norm';
 c.Label.FontSize = ftsize;
 % Save the figure in EPS format (modify file name)
-saveas(gcf, 'figures/cross_sec_2modes_srcMid.eps', "epsc");
+%saveas(gcf, 'figures/cross_sec_2modes_srcMid.eps', "epsc");
