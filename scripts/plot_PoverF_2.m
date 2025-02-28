@@ -12,8 +12,8 @@ rho=1.2;
 p0=20e-6;
 
 % set duct dimensions
-a = 1;
-b = 0.7;
+a = 0.7;
+b = 1;
 duct=[a, b];
 
 % Eliot constraint
