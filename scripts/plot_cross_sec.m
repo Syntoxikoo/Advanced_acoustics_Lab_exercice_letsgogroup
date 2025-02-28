@@ -21,7 +21,7 @@ contourf(xM,yM,G1)
 
 
 % Add title 
-title("Modes: n_x=1,n_y=1");
+title("Modes: m=1,n=1");
 
 
 % ------------------------------------- Second Tile ---------------------------------------------------------
@@ -35,7 +35,7 @@ xlim([0 lx])
 
 
 % Add title 
-title("Modes: n_x=2,n_y=2");
+title("Modes: m=2,n=2");
 
 
 
@@ -54,4 +54,4 @@ c = colorbar(ax2);
 c.Label.String = '|P| norm';
 c.Label.FontSize = ftsize;
 % Save the figure in EPS format (modify file name)
-saveas(gcf, 'figures/cross_sec_2modes_srcMid.eps', "epsc");
+saveas(gcf, 'figures/cross_sec_2modes_src00.eps', "epsc");
