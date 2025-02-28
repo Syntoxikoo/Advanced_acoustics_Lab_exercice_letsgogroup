@@ -14,24 +14,24 @@ corder = colororder;
 nexttile
 
 % Set X Y...
-Leg(1) = plot(nx,convf,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+Leg(1) = plot(nx*8,convf,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
 % set(gca, 'YScale', 'log')
 % xlim([])
 
 grid on; hold on;
 
-Leg(2) = plot(nx, convz,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
+Leg(2) = plot(nx*8, convz,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 hold off
 % Set axis limits 
 % ylim([0, 1]) 
-xlim([0, nx(end)]) 
+xlim([0, nx(end)*8]) 
 
 % Add title 
 % title('First Tile Title');
 
 % Uncomment these if individual tile labels are preferred
-xlabel('Number of modes (n,m)');
-ylabel('|error|^2');
+xlabel('Number of modes (n \cdot m)');
+ylabel('C (Pa^2)');
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
