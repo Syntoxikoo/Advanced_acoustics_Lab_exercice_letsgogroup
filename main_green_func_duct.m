@@ -33,7 +33,7 @@ z=0;
 
 xM = linspace(0,lx,100);
 yM = linspace(0,ly,100);
-rS = [0.35,0.5,0];
+rS = [0.,0.,0];
 f = diag(fmn);
 f(1) = 10;
 % Compute
@@ -47,3 +47,20 @@ plot_cross_sec
 compute_convergence
 plot_convergence
 
+
+%% plot velocity
+f = 1:10:1000;
+[Cp,Cg,nx] = calc_modes_vel([0.7,1],f,[9,9]);
+
+n = linspace(0,length(nx),length(nx));
+figure;
+surf(f,n,20*log10(abs(Cp)))
+xlabel("frequency (Hz)")
+ylabel("mode number")
+title("Phase velocity in function of frequency and number of modes")
+
+figure;
+surf(f,n,20*log10(abs(Cg)))
+xlabel("frequency (Hz)")
+ylabel("mode number")
+title("Group velocity in function of frequency and number of modes")
