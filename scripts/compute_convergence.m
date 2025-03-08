@@ -19,7 +19,7 @@ for ii= 1:length(nx)
         approx_sol(ii,:) =  Gf_duct([xM,yM],rS, z, [lx,ly], f, [round(nx(ii)),round(ny(ii))],[],1,false);
         diff = abs(G_full-approx_sol(ii,:));
         convf(ii) = mean((diff).^2);
-        if isnan(conv(ii))|| isinf(conv(ii))
+        if isnan(convf(ii))|| isinf(convf(ii))
             warning("Non-definite value detected at iteration %d", ii);
             break;
         end
@@ -46,7 +46,7 @@ for ii= 1:length(nx)
         approx_sol(ii,:) =  Gf_duct([xM,yM],rS, z, [lx,ly], f, [round(nx(ii)),round(ny(ii))],[],1,false);
         diff = abs(G_full.'-approx_sol(ii,:));
         convz(ii) = mean((diff).^2);
-        if isnan(conv(ii))|| isinf(conv(ii))
+        if isnan(convz(ii))|| isinf(convz(ii))
             warning("Non-definite value detected at iteration %d", ii);
             break;
         end
