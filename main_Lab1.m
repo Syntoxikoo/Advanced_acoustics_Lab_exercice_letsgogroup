@@ -32,6 +32,10 @@ plot_cross_sec
 compute_convergence
 plot_convergence
 
+%% plot over freq
+plot_PoverF_2
+%% plot over dist
+plot_PoverZ
 
 %% plot velocities
 f = 1:10:1000;

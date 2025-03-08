@@ -36,14 +36,5 @@ ylabel('C (Pa^2)');
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
 leg = legend('z fixed', 'f fixed', 'NumColumns', 2); 
-% leg.Layout.Tile = 'north'; 
 
-% Add common X and Y axis labels for all tiles
-% xlabel(tiled, 'Common X-axis Label');
-% ylabel(tiled, 'Common Y-axis Label');
-
-% Save the figure in EPS format (modify file name)
 saveas(gcf, 'figures/convergence.eps', "epsc");
-
-
-% OI

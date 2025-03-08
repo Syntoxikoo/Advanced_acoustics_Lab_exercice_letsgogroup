@@ -1,11 +1,4 @@
-% Silas Plot
-clear;
-close all;
-clc;
-addpath(genpath('scripts'))
-addpath(genpath("functions"))
-addpath figures/
-addpath datas/
+
 % constants
 c=344;
 rho=1.2;

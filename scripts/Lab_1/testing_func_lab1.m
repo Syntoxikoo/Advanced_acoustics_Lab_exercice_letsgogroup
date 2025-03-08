@@ -17,7 +17,6 @@ surf(f,z,20*log10(abs(G)/2e-5),'LineStyle','none')
 set(gca, 'XScale', 'log');
 colorbar;
 
-
 % Results with method 1
 G = Gf_duct([xM,yM],rS, z, [lx,ly], f, N_modes,[],1);
 figure(2);
