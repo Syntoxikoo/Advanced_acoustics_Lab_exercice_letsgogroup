@@ -16,15 +16,15 @@ duct=[a, b];
 constrain=false;
 
 % max m and n
-M = 60;
-N = 60;
+M = 8;
+N = 8;
 N_modes=[N, M];
 
 % set frequency
-f1=610;
+f1=160;
 w1=2*pi*f1;
 
-f2=160;
+f2=590;
 w2=2*pi*f2;
 
 % constants

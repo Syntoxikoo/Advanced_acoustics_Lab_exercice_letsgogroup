@@ -20,18 +20,18 @@ duct=[a, b];
 constrain=false;
 
 % max m and n
-M = 60;
-N = 60;
+M = 8;
+N = 8;
 N_modes=[N, M];
 
 
 % source vector
 r01=[0, 0, 0];
-r02=[a/2, 0, 0];
+r02=[0, b/2, 0];
 
 % receiver vector
 rec1=[0, 0];
-rec2=[a/2, 0];
+rec2=[0, 0];
 z1= 0.1;
 z2= 10;
 
