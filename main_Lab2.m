@@ -20,3 +20,15 @@ figure;
 plot(f,20*log10(abs(G)/p0));
 xlim([100 2000])
 grid on
+
+%% plot_room_config
+plot_room_config()
+
+%% plot cross section with green function
+% This part serve just as an exemple, for understanding how the Gf simulation work
+% for plotting use template !
+compute_gf_cross_sec
+%% plot green function for a specific pair of source receiver
+% This part serve just as an exemple, for understanding how the Gf simulation work
+% for plotting use template !
+compute_gf_simulation_test
