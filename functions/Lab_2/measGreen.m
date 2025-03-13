@@ -26,5 +26,7 @@ filenameBC=sprintf('/datas/Lab_2/MEASUREMENT/%d_Frequency Response H1(Pressure C
 
 k = 2.*pi.*f;
 
-G = sin(k.*dl)./(k.*S).*(Hac.*cos(k.*l)-abs(Hab).^2.*Hbc.*cos(k.*(l+dl)))/(cos(k.*l).^2-2.*real(Hab).*cos(k.*(l+dl))+abs(Hab).^2.*cos(k.*(l+dl)).^2);
+%G = sin(k.*dl)./(k.*S).*(Hac.*cos(k.*l)-abs(Hab).^2.*Hbc.*cos(k.*(l+dl)))/(cos(k.*l).^2-2.*real(Hab).*cos(k.*(l+dl))+abs(Hab).^2.*cos(k.*(l+dl)).^2);
+G = sin(k.*dl)./(k.*S).*(Hac.*cos(k.*l)-abs(Hab).^2.*Hbc.*cos(k.*(l+dl)))./(cos(k.*l).^2-2.*real(Hab).*cos(k.*(l+dl))+abs(Hab).^2 .*cos(k.*(l+dl)).^2);
+
 end

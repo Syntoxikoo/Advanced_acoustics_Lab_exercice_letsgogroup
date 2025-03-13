@@ -37,8 +37,10 @@ opts.EmptyLineRule = "read";
 tbl = readtable(filename, opts);
 
 %% Convert to output type
-f = tbl.f;
-Var1 = tbl.Var1;
+% f = tbl.f;
+% Var1 = tbl.Var1;
+
+f = tbl.Var1;
 Var2 = tbl.Var2;
 Var3 = tbl.Var3;
 

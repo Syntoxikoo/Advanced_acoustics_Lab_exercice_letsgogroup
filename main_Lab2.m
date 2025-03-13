@@ -31,4 +31,5 @@ compute_gf_cross_sec
 %% plot green function for a specific pair of source receiver
 % This part serve just as an exemple, for understanding how the Gf simulation work
 % for plotting use template !
-compute_gf_simulation_test
+Plotting_n_1
+
