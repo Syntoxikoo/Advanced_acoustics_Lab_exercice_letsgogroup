@@ -103,7 +103,9 @@ ylabel(tiled, 'G - Magnitude');
 
 % Save the figure in EPS format (modify file name)
 %saveas(gcf, 'figures/namefig.eps', "epsc");
-%%
+
+
+% Alpha
 
 
 
