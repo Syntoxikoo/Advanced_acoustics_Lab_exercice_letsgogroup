@@ -13,7 +13,7 @@ S = 0.00113;
 fileN = 1;
 p0=20e-6;
 
-
+[f, Hxy] = importHxy('');
 [f,G] = measGreen(l,dl,S,fileN);
 
 figure;

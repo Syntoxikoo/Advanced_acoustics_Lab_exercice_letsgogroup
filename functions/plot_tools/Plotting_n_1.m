@@ -1,4 +1,7 @@
 % Gf SIMULATION visualization
+% constants
+p0=20e-6; % pressure
+
 % Room dimensions
 room =[3.14, 4.38, 3.27]; 
 
@@ -8,11 +11,11 @@ room =[3.14, 4.38, 3.27];
 rS = [0.16, 0.155, 0.155];
 
 % Observation point #n.1 coordinates:
-x = 0;
-y = room(2); 
-z = 0;
+x = 0.03;
+y = 0.03; 
+z = 0.05;
 rM = [x,y,z];
-[G1,~] = green_func_room(rM,rS,room, 'absorption', true); 
+[G1,f] = green_func_room(rM,rS,room, 'absorption', true); 
 
 
 % % Observation point #n.2 coordinates:
@@ -31,8 +34,8 @@ S = 0.00113;
 fileN = 1;
 
 [f_m,G_m] = measGreen(l,dl,S,fileN);
-f_m = f_m';
-G_m = G_m';
+f_m = f_m.';
+G_m = G_m.';
 
 %%
 % Define the number of rows and columns for tiled layout
@@ -51,12 +54,12 @@ corder = colororder;
 nexttile
 
 % Set X Y...
-Leg(1) = plot(f,20*log10(abs(G1)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
+Leg(1) = plot(f,20*log10(abs(G1)/p0),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
 
 grid on; hold on;
 
 %Leg(2) = plot(f,20*log10(abs(G2)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
-Leg(2) = plot(f,20*log10(abs(G_m)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
+Leg(2) = plot(f_m,20*log10(abs(G_m)/p0),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 
 
 % Set axis limits 
@@ -103,7 +106,7 @@ ylabel(tiled, 'G - Magnitude');
 
 % Save the figure in EPS format (modify file name)
 %saveas(gcf, 'figures/namefig.eps', "epsc");
-%%
+
 
 
 
