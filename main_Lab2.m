@@ -13,7 +13,7 @@ S = 0.00113;
 fileN = 1;
 p0=20e-6;
 
-
+[f, Hxy] = importHxy('');
 [f,G] = measGreen(l,dl,S,fileN);
 
 figure;
@@ -32,4 +32,5 @@ compute_gf_cross_sec
 % This part serve just as an exemple, for understanding how the Gf simulation work
 % for plotting use template !
 Plotting_n_1
+%%
 
