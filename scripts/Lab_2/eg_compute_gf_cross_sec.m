@@ -8,3 +8,4 @@ rM = [x',y',z'];
 
 idx = find_f_modes(1,1,1);
 contourf(x,y,abs(G(:,:,idx)))
+title("this is an example of the green function from simulation")
