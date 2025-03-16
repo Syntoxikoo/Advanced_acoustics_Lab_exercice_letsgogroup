@@ -42,7 +42,7 @@ grid on; hold on;
 Leg(2) = plot(f,20*log10(abs(G_2)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 
 xlim([min(f) max(f)])
-
+ylim([30 110])
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
