@@ -1,4 +1,6 @@
-
+if exist("leg")
+clear leg
+end
 % ---------------------- Gf simulation -------------------
 % Room dimensions
 room =[3.14, 4.38, 3.27]; 
@@ -9,8 +11,8 @@ rS_4 = [0.16, 0.155, 0.155];
 
 % Receiver position:
 rM_4 = [1.58, room(2)/2, 1.64];
-[G4_sim,~] = green_func_room(rM_4,rS_4,room, 'absorption', true); 
-
+[G4_sim,f] = green_func_room(rM_4,rS_4,room, 'absorption', true); 
+[G4_noabs,~] = green_func_room(rM_4,rS_4,room); 
 % ---------------------- Gf Measurement -------------------
 l = 0.03;
 dl = 0.02;
@@ -39,14 +41,16 @@ nexttile
 % Set X Y...
 Leg(1) = plot(f,20*log10(abs(G4_sim)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
 grid on; hold on;
-Leg(2) = plot(f,20*log10(abs(G_4)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
+Leg(2) = plot(f,20*log10(abs(G4_noabs)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(4,:)); 
+Leg(3) = plot(f,20*log10(abs(G_4)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 
 xlim([min(f) max(f)])
 ylim([30 110])
+hold off
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
-leg = legend(Leg, 'Simulation', 'Measurement 4', 'NumColumns', 2); 
+leg = legend(Leg, 'Simulation','Simulation with no \gamma', 'Measurement 4', 'NumColumns', 3); 
 leg.Layout.Tile = 'north'; 
 
 % Add common X and Y axis labels for all tiles
@@ -56,6 +60,7 @@ ylabel(tiled, 'Level in dB SPL');
 % Save the figure in EPS format (modify file name)
 
 saveas(gcf, 'figures/gf_src_corner_rec_Fmid.eps', 'epsc');
+
 
 
 

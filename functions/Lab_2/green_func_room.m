@@ -11,7 +11,7 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     %   'absorption' - Boolean flag for absorption (default: false)
     %   'T60' - Reverberation time, could be either contstan or differents for each modes
     %   'compute' - number of modes computed 'range' or 'all' (default: 'range')
-    %   'fc' - cutoff frequency of the mode for faster compute, default : 300
+    %   'fc' - cutoff frequency of the mode for faster compute, default : 250
     %   'no_const' - plot_cross section with 3 varying axis
     %   'mode' - to input as specific mode as [n_x,n_y,n_z]
     %
@@ -49,7 +49,7 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     addParameter(p, 'absorption', false, @islogical);
     addParameter(p, 'T60', [3.5], @isnumeric);
     addParameter(p, 'compute', 'range');
-    addParameter(p, "fc", 300, @isnumeric)
+    addParameter(p, "fc", 250, @isnumeric)
     addParameter(p,"no_const",false,@islogical)
     addParameter(p,"mode", NaN(3,1))
     
@@ -107,7 +107,7 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     if absorption
         tau_m = T60/(6*log(10));
     else
-        tau_m = 0;
+        tau_m = 1e16;
     end  
 
     % --------------- Compute Gf for a paire of source - receiver ------------------
