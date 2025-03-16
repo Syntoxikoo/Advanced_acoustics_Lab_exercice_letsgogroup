@@ -5,7 +5,7 @@ room =[3.14, 4.38, 3.27];
 
 % Source position:
 rS_3 = [0.16, 0.155, 0.155];
-rS_5 = [0.035, 2.19, 0.155];
+rS_5 = [0.035, 2.19, 1.64];
 % Receiver position:
 rM_3 = [0.015, room(2)/2, 1.64];
 rM_5 = [0.16, 0.155, 0.155];
@@ -49,10 +49,10 @@ nexttile
 % Set X Y...
 Leg(1) = plot(f,20*log10(abs(G_3)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:)); 
 grid on; hold on;
-plot(f,20*log10(abs(G3_sim)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(1,:)); 
+% plot(f,20*log10(abs(G3_sim)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(1,:)); 
 
 Leg(2) = plot(f,20*log10(abs(G_5)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(3,:)); 
-plot(f,20*log10(abs(G_5)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(4,:)); 
+% plot(f,20*log10(abs(G_5)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(4,:)); 
 
 xlim([min(f) max(f)])
 

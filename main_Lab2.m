@@ -50,3 +50,8 @@ plot_gf_src_corner_rec_midY
 %% plot the green function for source in corner and receiver in [lx/2,ly/2,lz/2]
 plot_gf_src_corner_rec_Fmid
 
+%% Contourplot
+plot_gf_cross_sec
+
+%% plot 8.4 of the book
+plot_gf_through_room

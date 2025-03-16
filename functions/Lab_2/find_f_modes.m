@@ -1,4 +1,4 @@
-function idx = find_f_modes(nx,ny,nz,room,f)
+function [idx,fm] = find_f_modes(nx,ny,nz,room,f)
     % This function help finding the closest frequency index 
     % for a certain mode considering the defined frequency range
     % it could be used as a tool with the green function for a room
@@ -16,6 +16,7 @@ function idx = find_f_modes(nx,ny,nz,room,f)
     %
     % Returns:
     % idx - closest index to the specific mode accross the frequency axis
+    % fm - frequency of the specific mode
     %
     % Exemple of usage of the function :
     %   room =[3.14, 4.38, 3.27];

@@ -12,6 +12,8 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     %   'T60' - Reverberation time, could be either contstan or differents for each modes
     %   'compute' - number of modes computed 'range' or 'all' (default: 'range')
     %   'fc' - cutoff frequency of the mode for faster compute, default : 300
+    %   'no_const' - plot_cross section with 3 varying axis
+    %   'mode' - to input as specific mode as [n_x,n_y,n_z]
     %
     % Returns:
     % G - Green's function for given frequencies and positions 
@@ -48,6 +50,8 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     addParameter(p, 'T60', [3.5], @isnumeric);
     addParameter(p, 'compute', 'range');
     addParameter(p, "fc", 300, @isnumeric)
+    addParameter(p,"no_const",false,@islogical)
+    addParameter(p,"mode", NaN(3,1))
     
     parse(p, rM, rS, room, varargin{:});
     
@@ -56,6 +60,8 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     T60 = p.Results.T60;
     compute = (p.Results.compute);
     fc = p.Results.fc;
+    no_const = p.Results.no_const;
+    S_mode = p.Results.mode;
 
     % Constants
     c0 = 343;
@@ -70,6 +76,7 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
 
     % Determine maximum mode in function of the frequency 
     % range or the defined cutoff
+
     if strcmp(compute, 'range')
         max_mode = compute_max_mode(fc, c0, room);
     else
@@ -77,11 +84,16 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
     end
     
     %----------------------- Compute mode frequency --------------------------------
+    if ~isnan(S_mode)
+        nx = S_mode(1);
+        ny = S_mode(2);
+        nz = S_mode(3);
+    else
     [nx_grid, ny_grid, nz_grid] = ndgrid(0:max_mode, 0:max_mode, 0:max_mode);
     nx = nx_grid(:);
     ny = ny_grid(:);
     nz = nz_grid(:);
-    
+    end
     pi_over_lx = pi / lx;
     pi_over_ly = pi / ly;
     pi_over_lz = pi / lz;
@@ -120,66 +132,95 @@ function [G,f] = green_func_room(rM, rS, room, varargin)
 
     % --------------- Compute Gf for a the entire cross section --------------------
     else
+
         % ------ finding which dimension is constant -----
         uniqX = unique(rM(:,1));
         uniqY = unique(rM(:,2));
         uniqZ = unique(rM(:,3));
         nUniqPerDim = [length(uniqX), length(uniqY), length(uniqZ)];
         
-        [~, constDim] = min(nUniqPerDim);
-        cst = unique(rM(:,constDim));
-        
-        varyingDims = setdiff([1,2,3], constDim);
-        dim1 = varyingDims(1);
-        dim2 = varyingDims(2);
-        r1 = unique(rM(:,dim1));
-        r2 = unique(rM(:,dim2));
-
-        [r1_g, r2_g] = ndgrid(r1,r2);
-        rconst = ones(size(r1_g)) * cst;
-        
-        [nRows, nCols] = size(r1_g);
-        numPoints = nRows * nCols;
+        % ------ special case for fig 8.4 of the book ----
+        if all(nUniqPerDim ~=1) && no_const == true
+            cos_x = cos(nx * pi_over_lx * rM(:,1)');
+            cos_y = cos(ny * pi_over_ly * rM(:,2)');
+            cos_z = cos(nz * pi_over_lz * rM(:,3)');
+            phim_rM = cos_x .* cos_y .* cos_z;
+            phim_rM = phim_rM.';
             
-        coords = zeros(numPoints, 3);
-            
-        switch constDim
-            case 1  % X is constant
-                coords(:,1) = rconst(:);
-                coords(:,2) = r1_g(:);
-                coords(:,3) = r2_g(:);
-            case 2  % Y is constant
-                coords(:,1) = r1_g(:);
-                coords(:,2) = rconst(:);
-                coords(:,3) = r2_g(:);
-            case 3  % Z is constant
-                coords(:,1) = r1_g(:);
-                coords(:,2) = r2_g(:);
-                coords(:,3) = rconst(:);
-        end
-        % ---------------------------------------------
-
-        cos_x = cos(nx * pi_over_lx * coords(:,1)');
-        cos_y = cos(ny * pi_over_ly * coords(:,2)');
-        cos_z = cos(nz * pi_over_lz * coords(:,3)');
-        phim_rM = cos_x .* cos_y .* cos_z;
-        phim_rM = phim_rM.';
-            
-        phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
-                cos(ny * pi_over_ly * rS(2)) .* ...
-                cos(nz * pi_over_lz * rS(3));
                 
-        G = zeros(nRows, nCols, length(f));
-        
-        for ii = 1:length(f)
-            if absorption
-                den = (k(ii)^2 - km.^2 + eps - 1j*k(ii)/(tau_m*c0));
-            else
-                den = (k(ii)^2 - km.^2 + eps );
-            end
-            G_tmp = sum(phim_rM.* (phim_rS ./ den).',2);
+            phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
+                    cos(ny * pi_over_ly * rS(2)) .* ...
+                    cos(nz * pi_over_lz * rS(3));
+            G = zeros(length(rM(:,1)), length(f));
+    
+            for ii = 1:length(f)
+                if absorption
+                    den = (k(ii)^2 - km.^2 + eps - 1j*k(ii)/(tau_m*c0));
+                else
+                    den = (k(ii)^2 - km.^2 + eps );
+                end
+                G(:,ii) = sum(phim_rM.* (phim_rS ./ den).',2);
 
-            G(:,:,ii) = reshape(G_tmp, [nRows,nCols]);
+            end
+
+        % ------ cross section ----
+        else
+            [~, constDim] = min(nUniqPerDim);
+            cst = unique(rM(:,constDim));
+            
+            varyingDims = setdiff([1,2,3], constDim);
+            dim1 = varyingDims(1);
+            dim2 = varyingDims(2);
+            r1 = unique(rM(:,dim1));
+            r2 = unique(rM(:,dim2));
+
+            [r1_g, r2_g] = ndgrid(r1,r2);
+            rconst = ones(size(r1_g)) * cst;
+            
+            [nRows, nCols] = size(r1_g);
+            numPoints = nRows * nCols;
+                
+            coords = zeros(numPoints, 3);
+                
+            switch constDim
+                case 1  % X is constant
+                    coords(:,1) = rconst(:);
+                    coords(:,2) = r1_g(:);
+                    coords(:,3) = r2_g(:);
+                case 2  % Y is constant
+                    coords(:,1) = r1_g(:);
+                    coords(:,2) = rconst(:);
+                    coords(:,3) = r2_g(:);
+                case 3  % Z is constant
+                    coords(:,1) = r1_g(:);
+                    coords(:,2) = r2_g(:);
+                    coords(:,3) = rconst(:);
+            end
+            % ---------------------------------------------
+
+            cos_x = cos(nx * pi_over_lx * coords(:,1)');
+            cos_y = cos(ny * pi_over_ly * coords(:,2)');
+            cos_z = cos(nz * pi_over_lz * coords(:,3)');
+            phim_rM = cos_x .* cos_y .* cos_z;
+            phim_rM = phim_rM.';
+                
+            phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
+                    cos(ny * pi_over_ly * rS(2)) .* ...
+                    cos(nz * pi_over_lz * rS(3));
+                    
+            G = zeros(nRows, nCols, length(f));
+            
+            for ii = 1:length(f)
+                disp("process cross section computation of the Green function : "+ii+"/"+length(f))
+                if absorption
+                    den = (k(ii)^2 - km.^2 + eps - 1j*k(ii)/(tau_m*c0));
+                else
+                    den = (k(ii)^2 - km.^2 + eps );
+                end
+                G_tmp = sum(phim_rM.* (phim_rS ./ den).',2);
+
+                G(:,:,ii) = reshape(G_tmp, [nRows,nCols]);
+            end
         end
     end
     % ------------------------------------------------------------------------------
