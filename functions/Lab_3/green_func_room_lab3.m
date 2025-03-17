@@ -52,6 +52,7 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
     addParameter(p, "fc", 250, @isnumeric)
     addParameter(p,"no_const",false,@islogical)
     addParameter(p,"mode", NaN(3,1))
+    addParameter(p,"max_mode",0,@isnumeric)
     
     parse(p, rM, rS, room, varargin{:});
     
@@ -62,6 +63,7 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
     fc = p.Results.fc;
     no_const = p.Results.no_const;
     S_mode = p.Results.mode;
+    max_mode = p.Results.max_mode;
 
     % Constants
     c0 = 343;
@@ -76,8 +78,10 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
 
     % Determine maximum mode in function of the frequency 
     % range or the defined cutoff
-
-    if strcmp(compute, 'range')
+    if max_mode~= 0 
+        max_mode = round(max_mode);
+        disp("compute mode until : m =" + max_mode)
+    elseif strcmp(compute, 'range')
         max_mode = compute_max_mode(fc, c0, room);
     else
         max_mode = compute_max_mode(f, c0, room);
