@@ -10,7 +10,7 @@ y = linspace(0,room(2),100);
 z = ones(size(x)) * room(3);
 rM = [x',y',z'];
 
-[G,f] = green_func_room(rM,rS,room, 'absorption', true);%, 'mode', [nx,ny,nz]);
+[G,f] = green_func_room(rM,rS,room, 'absorption', true);
 idx = find_f_modes(nx,ny,nz);
 G_1 = abs(G(:,:,idx));
 
@@ -20,7 +20,7 @@ x2 = ones(size(y2))*room(1);
 z2 = linspace(0,room(3),100); 
 rM = [x2',y2',z2']; 
 
-[G,f] = green_func_room(rM,rS,room, 'absorption', true;%, 'mode', [nx,ny,nz]);
+[G,f] = green_func_room(rM,rS,room, 'absorption', true);
 idx = find_f_modes(nx,ny,nz);
 G_2 = abs(G(:,:,idx));
 
@@ -29,7 +29,7 @@ z3 = linspace(0,room(3),100);
 y3 = ones(size(x3))*room(2);
 rM = [x3',y3',z3'];
 
-[G,f] = green_func_room(rM,rS,room, 'absorption', true);%, 'mode', [nx,ny,nz]);
+[G,f] = green_func_room(rM,rS,room, 'absorption', true);
 idx = find_f_modes(nx,ny,nz);
 G_3 = abs(G(:,:,idx));
 
@@ -50,7 +50,7 @@ corder = colororder;
 
 nexttile
 % G1 = abs(G(:,:,idx(2))/max(G(:,:,idx(2)),[],'all'));
-contourf(x,y,G_1)
+contourf(x,y,G_1.')
 title("z=0, Modes: n_x=3,n_y=2,n_z=1");
 
 
@@ -60,17 +60,17 @@ ylabel( 'Y (m)');
 % ------------------------------------- Second Tile ---------------------------------------------------------
 ax2 = nexttile ;
 
-contourf(y2,y2,G_2)
+contourf(y2,z2,G_2)
 
 title("x=0, Modes: n_x=3,n_y=2,n_z=1");
-xlabel( 'Y (m)');
-ylabel( 'Z (m)');
+xlabel( 'Z (m)');
+ylabel( 'Y (m)');
 
 
 % ------------------------------------- Third Tile ---------------------------------------------------------
 nexttile ;
 
-contourf(x3,z3,G_3)
+contourf(x3,z3,G_3.')
 
 title("y=0, Modes: n_x=3,n_y=2,n_z=1");
 xlabel( 'X (m)');
@@ -81,5 +81,6 @@ colorbar()
 
 % Save the figure in EPS format (modify file name)
 saveas(gcf, 'figures/gf_cross_sec_321_whole_sum.eps', "epsc");
+
 
 
