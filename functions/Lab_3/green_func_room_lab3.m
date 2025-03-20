@@ -144,7 +144,7 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
         nUniqPerDim = [length(uniqX), length(uniqY), length(uniqZ)];
         
         % ------ special case for fig 8.4 of the book ----
-        if all(nUniqPerDim ~=1) && no_const == true
+        if all(nUniqPerDim ~=1) || no_const == true
             cos_x = cos(nx * pi_over_lx * rM(:,1)');
             cos_y = cos(ny * pi_over_ly * rM(:,2)');
             cos_z = cos(nz * pi_over_lz * rM(:,3)');
