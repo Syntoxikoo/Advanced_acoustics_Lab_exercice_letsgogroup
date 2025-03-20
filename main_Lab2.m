@@ -22,7 +22,7 @@ rM_4 = [1.58, room(2)/2, 1.64];
 rM_5 = [0.16, 0.155, 0.155];
 rM_6 = [0.015, 1.46, 1.64];
 %% Compute green function from measurement : Example
-% This script describe the way to compute the gren function for a room from meas
+% This script describe the way to compute the green function for a room from meas
 eg_gf_room_from_meas
 
 %% plot_room_config
