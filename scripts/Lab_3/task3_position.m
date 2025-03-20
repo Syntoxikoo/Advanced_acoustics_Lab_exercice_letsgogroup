@@ -1,101 +1,67 @@
-room = [6.93, 4.78, 5.55]; % Arbitrary room dimensions
-rS = [0, 0, 0];
+clc;
+clear;
 
-num_val_r = 50;
-r_values = linspace(0, room(3), num_val_r); % Generate r values from 0 to room(3)
+Nwaves = 5000; % amount of plane waves for each point
+Npoints = 100; % space points
+Lz = 7;        % z length room (m)
+c = 343;       % (m/s)
+f = 700;       % (Hz)
+omega = 2 * pi * f ;
+k = omega / c;
 
-[G_temp, ~] = green_func_room_lab3([0, 0, r_values(1)], rS, room, 'absorption', true);
-Nfreq = length(G_temp); % Number of frequency bins
-G_values = zeros(num_val_r, Nfreq); % Preallocate matrix for storing G values
+z_values = linspace(0, Lz, Npoints); % space points
+p2_values = zeros(size(z_values));
 
-for i = 1:num_steps
-    r = r_values(i);
-    rM = [0, 0, r];
-    
-    [G, ~] = green_func_room_lab3(rM, rS, room, 'absorption', true);
-    G_values(i, :) = G;
+% calculate p_2 for each position as a sum of every random wave
+for idx = 1:length(z_values)
+    r = z_values(idx);
+    phi_i = rand(1, Nwaves) * 2 * pi; % random phases
+    theta_i = acos(2 * rand(1, Nwaves) - 1); % random angles
+    sum_exp = sum(exp(-1j * (k * r * cos(theta_i) + phi_i))); 
+    p2_values(idx) = (1/Nwaves) * abs(sum_exp)^2;
 end
 
-% Plot results
+% Print array size info
+fprintf('Size of p2_values array: %d x %d\n', size(p2_values,1), size(p2_values,2));
+
+p_ref = 2 * 10^(-5);
+
+
+% Plot relative sound pressure level (SPL)
 figure;
-imagesc(r_values, f, 20*log10(abs(G_values)/2e-5)); % Color plot of G vs frequency and r
-set(gca, 'YDir', 'normal'); % Ensure frequency axis is in correct order
-xlabel("r (height from floor)");
-ylabel("Frequency (Hz)");
-title("Green's Function Variation with r");
-colorbar;
-colormap jet;
+plot(z_values, 10*log10(p2_values / (p_ref)^2), 'LineWidth', 1.5);
+grid on;
+title('Relative Sound Pressure Level vs Distance at 700 Hz');
+xlabel('z (m)');
+ylabel('L_p (dB SPL)');
 
+% stats
+mean_p2 = mean(p2_values);
+std_p2 = std(p2_values);
+rel_std_p2 = std_p2 / mean_p2 * 100; % relative std (%)
 
-%%
+mean_p2_dB = mean(10*log10(p2_values / (p_ref)^2));
+std_p2_dB = std(10*log10(p2_values / (p_ref)^2));
+rel_std_p2_dB = std_p2_dB / mean_p2_dB * 100; % relative std (%)
 
-room = [6.93, 4.78, 5.55]; % Arbitrary room dimensions
-rS = [0,0,0];
-x = zeros(100);
-y = zeros(100);
-z = linspace(0,room(3),100);
-rM = [x',y',z'];
-%[idx,fm] = find_f_modes_lab3(1,1,1);
-%[G,f] = green_func_room_lab3(rM,rS,room, 'absorption', true,'no_const',true, 'f', fm);
-[G, ~] = green_func_room_lab3(rM, rS, room, 'absorption', true, 'no_const',true);
+% Histogram (p2 values)
+N_bins = 30;
+figure;
+hist(p2_values, N_bins);
+grid on;
+title(['Histogram of p_2 values across spatial points ' ...
+    '(Mean = ' num2str(mean_p2, '%.2f') ' Pa, Std = ' num2str(std_p2, '%.2f') ...
+    ' Pa, Rel. Std = ' num2str(rel_std_p2, '%.2f') ' %)']);
+xlabel('p_2 values');
+ylabel('Counts');
 
-
-% Define the number of rows and columns for tiled layout
-nrows = 1;
-ncols = 1;
-heightScale = 0.6; % Adjust height scaling if needed
-
-% ------------------------------------------------------------------------------------------------------------
-[columnwidth, ~] = get_widths();
-height = get_height() * heightScale; 
-fig = figure("Position", [0, 0, columnwidth, height], "Units", "points");
-tiled = tiledlayout(nrows, ncols, "TileSpacing", "tight", "Padding", "loose");
-corder = colororder;
-
-% ------------------------------------- First Tile ------------------------------------------------------------
-
-nexttile
-
-
-
-Leg(1) = plot(x,20*log10(abs(G)/2e-5),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:)); 
-grid("on"); hold on;
-Leg(2) = plot(x,20*log10(abs(G2)/2e-5),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(1,:)); 
-
-hold off
-xlabel( tiled,'Position');
-xlim([0 max(x)])
-% xticks([0 max(x)])
-% xticklabels( ["(0,0,0)", "(l_x,l_y,l_z)"])
-% 
-% ylabel(tiled,'Level in dB SPL');
-% 
-% % ------------------------------------- Misc for Figure -----------------------------------------------------------
-% 
-% leg = legend(Leg, 'f \approx f_m [1,1,1]', 'f \approx f_m [2,1,1]', 'NumColumns', 2); 
-% leg.Layout.Tile = 'north'; 
-% 
-% 
-% %---- Misc for Figure -----------------------------------------------------------
-% 
-% 
-% % Save the figure in EPS format (modify file name)
-% 
-% saveas(gcf, 'figures/gf_through_room.eps', "epsc");
-
-
-%% average pressure for 1 position
-
-N = 10^2;
-f = 700; % Hz
-c = 343 ; % m/s
-omega = 2*pi*f;
-k = omega/c;
-l_z = 7; % m
-
-sum=0;
-for i = 1:N
-    sum=sum+exp(-1j*(k*rcos(theta_i+phi_i)));
-end
-
-p_avg_sqr = 1/N * abs(sum)^2;
+% Optional: plot histogram in dB scale
+figure;
+hist(10*log10(p2_values / (p_ref)^2), N_bins);
+grid on;
+title(['Histogram of SPL across spatial points ' ...
+    '(Mean = ' num2str(10*log10(mean_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
+    'Std = ' num2str(10*log10(std_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
+    'Rel. Std = ' num2str(rel_std_p2_dB, '%.2f') '%)']);
+xlabel('L_p (dB SPL)');
+ylabel('Counts');

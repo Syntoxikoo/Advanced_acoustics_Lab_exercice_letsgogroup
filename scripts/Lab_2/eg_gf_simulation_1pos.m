@@ -14,3 +14,4 @@ plot(f,20*log10(abs(G2)/2e-5),"LineWidth",1)
 legend("S:corner - R:corner", "S: corner - R: full center")
 xlim([min(f) max(f)])
 title("this is an example of the green function from simulation")
+    
