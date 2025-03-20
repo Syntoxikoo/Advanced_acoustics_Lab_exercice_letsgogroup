@@ -1,16 +1,43 @@
-room =[3.14, 4.38, 3.27];
+room = [6.93, 4.78, 5.55]; % Arbitrary room dimensions
+rS = [0, 0, 0];
+
+num_val_r = 50;
+r_values = linspace(0, room(3), num_val_r); % Generate r values from 0 to room(3)
+
+[G_temp, ~] = green_func_room_lab3([0, 0, r_values(1)], rS, room, 'absorption', true);
+Nfreq = length(G_temp); % Number of frequency bins
+G_values = zeros(num_val_r, Nfreq); % Preallocate matrix for storing G values
+
+for i = 1:num_steps
+    r = r_values(i);
+    rM = [0, 0, r];
+    
+    [G, ~] = green_func_room_lab3(rM, rS, room, 'absorption', true);
+    G_values(i, :) = G;
+end
+
+% Plot results
+figure;
+imagesc(r_values, f, 20*log10(abs(G_values)/2e-5)); % Color plot of G vs frequency and r
+set(gca, 'YDir', 'normal'); % Ensure frequency axis is in correct order
+xlabel("r (height from floor)");
+ylabel("Frequency (Hz)");
+title("Green's Function Variation with r");
+colorbar;
+colormap jet;
+
+
+%%
+
+room = [6.93, 4.78, 5.55]; % Arbitrary room dimensions
 rS = [0,0,0];
-x = linspace(0,room(1),100);
-y = linspace(0,room(2),100);
+x = zeros(100);
+y = zeros(100);
 z = linspace(0,room(3),100);
 rM = [x',y',z'];
-[idx,fm] = find_f_modes(1,1,1);
-[G,f] = green_func_room(rM,rS,room, 'absorption', true,'no_const',true, 'f', fm);
-
-[~,fm2] = find_f_modes(2,1,1);
-fm = mean([fm,fm2]);
-[G2,f2] = green_func_room(rM,rS,room, 'absorption', true,'no_const',true, 'f', fm);
-% G_1 = abs(G(:,idx));
+%[idx,fm] = find_f_modes_lab3(1,1,1);
+%[G,f] = green_func_room_lab3(rM,rS,room, 'absorption', true,'no_const',true, 'f', fm);
+[G, ~] = green_func_room_lab3(rM, rS, room, 'absorption', true, 'no_const',true);
 
 
 % Define the number of rows and columns for tiled layout
@@ -57,3 +84,18 @@ xlim([0 max(x)])
 % saveas(gcf, 'figures/gf_through_room.eps', "epsc");
 
 
+%% average pressure for 1 position
+
+N = 10^2;
+f = 700; % Hz
+c = 343 ; % m/s
+omega = 2*pi*f;
+k = omega/c;
+l_z = 7; % m
+
+sum=0;
+for i = 1:N
+    sum=sum+exp(-1j*(k*rcos(theta_i+phi_i)));
+end
+
+p_avg_sqr = 1/N * abs(sum)^2;
