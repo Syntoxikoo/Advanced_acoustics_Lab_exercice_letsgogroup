@@ -12,7 +12,7 @@ k = omega / c;
 z_values = linspace(0, Lz, Npoints); % space points
 p2_values = zeros(size(z_values));
 
-% calculate p_2 for each position as a sum of every random wave
+% calculating p_2 for each position as a sum of every random wave
 for idx = 1:length(z_values)
     r = z_values(idx);
     phi_i = rand(1, Nwaves) * 2 * pi; % random phases
@@ -21,13 +21,11 @@ for idx = 1:length(z_values)
     p2_values(idx) = (1/Nwaves) * abs(sum_exp)^2;
 end
 
-% Print array size info
 fprintf('Size of p2_values array: %d x %d\n', size(p2_values,1), size(p2_values,2));
 
 p_ref = 2 * 10^(-5);
 
-
-% Plot relative sound pressure level (SPL)
+% Relative sound pressure level (SPL)
 figure;
 plot(z_values, 10*log10(p2_values / (p_ref)^2), 'LineWidth', 1.5);
 grid on;
@@ -44,7 +42,7 @@ mean_p2_dB = mean(10*log10(p2_values / (p_ref)^2));
 std_p2_dB = std(10*log10(p2_values / (p_ref)^2));
 rel_std_p2_dB = std_p2_dB / mean_p2_dB * 100; % relative std (%)
 
-% Histogram (p2 values)
+% Histograms (p2 and dB) for one sound field
 N_bins = 30;
 figure;
 hist(p2_values, N_bins);
@@ -55,7 +53,6 @@ title(['Histogram of p_2 values across spatial points ' ...
 xlabel('p_2 values');
 ylabel('Counts');
 
-% Optional: plot histogram in dB scale
 figure;
 hist(10*log10(p2_values / (p_ref)^2), N_bins);
 grid on;
