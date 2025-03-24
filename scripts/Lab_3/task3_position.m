@@ -1,8 +1,5 @@
-clc;
-clear;
-
 Nwaves = 5000; % amount of plane waves for each point
-Npoints = 100; % space points
+Npoints = 1000; % space points
 Lz = 7;        % z length room (m)
 c = 343;       % (m/s)
 f = 700;       % (Hz)
@@ -62,3 +59,6 @@ title(['Histogram of SPL across spatial points ' ...
     'Rel. Std = ' num2str(rel_std_p2_dB, '%.2f') '%)']);
 xlabel('L_p (dB SPL)');
 ylabel('Counts');
+
+X_1  = p2_values/2;
+X_2 = 10*log10(p2_values / (p_ref)^2);
