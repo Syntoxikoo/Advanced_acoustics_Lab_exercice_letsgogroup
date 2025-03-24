@@ -6,7 +6,7 @@ clc;
 kr = linspace(0,8*pi,1000);
 N=100;
 
-y = spatCorr(kr,N);
+y = spatCorr(kr,N)./meanSqP(N);
 
 
 figure;
