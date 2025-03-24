@@ -1,4 +1,15 @@
 function [mean_p_hat_sq, rel_std_p_hat_sq, rel_std_p_hat, std_Lp] = mean_square_p(N, M)
+%---------------------------------------------------------------------------------------
+% Parameters:
+% N = Number of plane waves
+% M = Number of Monte Carlo realizations
+
+% Outputs:
+% - Mean of |p̂|^2
+% - Relative Std Dev of |p̂|^2
+% - Relative Std Dev of |p̂|
+% - Std Dev of Lp
+%---------------------------------------------------------------------------------------
 
     p_hat_sq = zeros(M,1);
     p_hat = zeros(M,1);
@@ -7,7 +18,7 @@ function [mean_p_hat_sq, rel_std_p_hat_sq, rel_std_p_hat, std_Lp] = mean_square_
     % Monte Carlo simulation
     for m = 1:M
         phi = 2 * pi * rand(N,1);  % Random phases in [0, 2*pi]
-        p_hat_m = (1/sqrt(2*N)) * sum(exp(1j * phi)); % Compute normalized pressure sum
+        p_hat_m = (1/sqrt(2*N)) * sum(exp(1j * phi)); % normalized pressure sum
         p_hat_sq(m) = abs(p_hat_m)^2; % Mean square pressure
         p_hat(m) = abs(p_hat_m);     % Pressure amplitude
         Lp(m) = 10 * log10(p_hat_sq(m)); % SPL in dB
