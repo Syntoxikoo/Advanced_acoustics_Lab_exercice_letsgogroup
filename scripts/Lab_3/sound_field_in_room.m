@@ -18,7 +18,7 @@ z =  lambs/2 + (room(3)- lambs) .*rand(N,1);
 rS = [0,0,0];
 rM = [x,y,z];
 
-G = green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',10, 'absorption', false, 'T60', TR60,'no_const',true);
+G = green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode', 20, 'absorption', false, 'T60', TR60,'no_const',true);
 
 figure;
 scatter(x,y, 10, 20*log10(abs(G)/2e-5))
