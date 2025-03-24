@@ -5,6 +5,9 @@ addpath(genpath('scripts'))
 addpath(genpath("functions"))
 addpath(genpath("datas"))
 
+%% ---------------------- PART 1 --------------
+task_1
+
 % ---------------------- PART 3 --------------
 %% compute part 4 
 task3_position
