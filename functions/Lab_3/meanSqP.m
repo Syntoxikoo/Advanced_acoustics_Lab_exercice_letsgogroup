@@ -1,4 +1,4 @@
-function y = meanSqP(N)
+function y = meanSqP(N,phi)
 
 
 phi=rand(1,N).*2.*pi;
