@@ -1,5 +1,7 @@
+%% function
+
 Nwaves = 5000; % amount of plane waves for each point
-Npoints = 1000; % space points
+Npoints = 10000; % space points
 Lz = 7;        % z length room (m)
 c = 343;       % (m/s)
 f = 700;       % (Hz)
@@ -9,7 +11,7 @@ k = omega / c;
 z_values = linspace(0, Lz, Npoints); % space points
 p2_values = zeros(size(z_values));
 
-% calculate p_2 for each position as a sum of every random wave
+% calculating p_2 for each position as a sum of every random wave
 for idx = 1:length(z_values)
     r = z_values(idx);
     phi_i = rand(1, Nwaves) * 2 * pi; % random phases
@@ -18,50 +20,91 @@ for idx = 1:length(z_values)
     p2_values(idx) = (1/Nwaves) * abs(sum_exp)^2;
 end
 
-% Print array size info
 fprintf('Size of p2_values array: %d x %d\n', size(p2_values,1), size(p2_values,2));
 
 p_ref = 2 * 10^(-5);
+pref_sq = p_ref^2;
 
-
-% Plot relative sound pressure level (SPL)
+% Relative sound pressure level (SPL)
 figure;
-plot(z_values, 10*log10(p2_values / (p_ref)^2), 'LineWidth', 1.5);
+plot(z_values, 10*log10(p2_values / pref_sq), 'LineWidth', 1.5);
 grid on;
 title('Relative Sound Pressure Level vs Distance at 700 Hz');
 xlabel('z (m)');
 ylabel('L_p (dB SPL)');
 
-% stats
-mean_p2 = mean(p2_values);
-std_p2 = std(p2_values);
-rel_std_p2 = std_p2 / mean_p2 * 100; % relative std (%)
+%% stats
 
-mean_p2_dB = mean(10*log10(p2_values / (p_ref)^2));
-std_p2_dB = std(10*log10(p2_values / (p_ref)^2));
-rel_std_p2_dB = std_p2_dB / mean_p2_dB * 100; % relative std (%)
+%p_rms
+p_rms = sqrt(p2_values/2);
 
-% Histogram (p2 values)
+mean_p = mean(p_rms);
+std_p = std(p_rms);
+rel_std_p = std_p / mean_p * 100; % relative std (%)
+
+Lp_values = 20 * log10(p_rms / p_ref);
+mean_Lp = mean(Lp_values);
+std_Lp = std(Lp_values);
+
+% Histograms (p2 and dB) for one sound field
+
 N_bins = 30;
 figure;
-hist(p2_values, N_bins);
+hist(p_rms, N_bins);
 grid on;
-title(['Histogram of p_2 values across spatial points ' ...
-    '(Mean = ' num2str(mean_p2, '%.2f') ' Pa, Std = ' num2str(std_p2, '%.2f') ...
-    ' Pa, Rel. Std = ' num2str(rel_std_p2, '%.2f') ' %)']);
+title(['Histogram of p_rms values across spatial points ' ...
+    '(Mean = ' num2str(mean_p, '%.2f') ' Pa, Std = ' num2str(std_p, '%.2f') ...
+    ' Pa, Rel. Std = ' num2str(rel_std_p, '%.2f') ' %)']);
 xlabel('p_2 values');
 ylabel('Counts');
 
-% Optional: plot histogram in dB scale
 figure;
-hist(10*log10(p2_values / (p_ref)^2), N_bins);
+hist(Lp_values, N_bins);
 grid on;
 title(['Histogram of SPL across spatial points ' ...
-    '(Mean = ' num2str(10*log10(mean_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
-    'Std = ' num2str(10*log10(std_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
-    'Rel. Std = ' num2str(rel_std_p2_dB, '%.2f') '%)']);
+    '(Mean = ' num2str(mean_Lp, '%.2f') ' dB, ' ...
+    'Std = ' num2str(std_Lp, '%.2f') ' dB)']);
 xlabel('L_p (dB SPL)');
 ylabel('Counts');
 
-X_1  = p2_values/2;
-X_2 = 10*log10(p2_values / (p_ref)^2);
+%% OLD VERSION OF STATS PART
+
+% p_ref = 2 * 10^(-5);
+% 
+% % Relative sound pressure level (SPL)
+% figure;
+% plot(z_values, 10*log10(p2_values / (p_ref)^2), 'LineWidth', 1.5);
+% grid on;
+% title('Relative Sound Pressure Level vs Distance at 700 Hz');
+% xlabel('z (m)');
+% ylabel('L_p (dB SPL)');
+% 
+% % stats
+% mean_p2 = mean(p2_values);
+% std_p2 = std(p2_values);
+% rel_std_p2 = std_p2 / mean_p2 * 100; % relative std (%)
+% 
+% mean_p2_dB = mean(10*log10(p2_values / (p_ref)^2));
+% std_p2_dB = std(10*log10(p2_values / (p_ref)^2));
+% rel_std_p2_dB = std_p2_dB / mean_p2_dB * 100; % relative std (%)
+% 
+% % Histograms (p2 and dB) for one sound field
+% N_bins = 30;
+% figure;
+% hist(p2_values, N_bins);
+% grid on;
+% title(['Histogram of p_2 values across spatial points ' ...
+%     '(Mean = ' num2str(mean_p2, '%.2f') ' Pa, Std = ' num2str(std_p2, '%.2f') ...
+%     ' Pa, Rel. Std = ' num2str(rel_std_p2, '%.2f') ' %)']);
+% xlabel('p_2 values');
+% ylabel('Counts');
+% 
+% figure;
+% hist(10*log10(p2_values / (p_ref)^2), N_bins);
+% grid on;
+% title(['Histogram of SPL across spatial points ' ...
+%     '(Mean = ' num2str(10*log10(mean_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
+%     'Std = ' num2str(10*log10(std_p2_dB / (p_ref)^2), '%.2f') ' dB, ' ...
+%     'Rel. Std = ' num2str(rel_std_p2_dB, '%.2f') '%)']);
+% xlabel('L_p (dB SPL)');
+% ylabel('Counts');
