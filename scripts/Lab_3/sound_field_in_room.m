@@ -11,7 +11,7 @@ fs = 700;
 
 lambs = c0 / fs;
 M = 100;
-N = 1000;
+N = 10000;
 G_m =zeros(N,M);
 % for i= 1: M
 x =  lambs/2 + (room(1)- lambs) .*rand(N,1);
@@ -25,10 +25,10 @@ z =  lambs/2 + (room(3)- lambs) .*rand(N,1);
 rS = [0,0,0];
 rM = [x,y,z];
 
-G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',30, 'absorption', true, 'T60', TR60,'no_const',true);
+% G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',30, 'absorption', true, 'T60', TR60,'no_const',true);
+load("datas/Lab_3/gren_PSD1_N_10000.mat")
 % end
 % G = mean(G_m,1);
-
 
 
 
@@ -41,7 +41,7 @@ G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',30, 'absorption', true, '
 
 % stats
 X_11 = abs(G).^2 /2;
-X_21= 20 * log10(X_11/2e-5);
+X_21= 20 * log10(abs(G/sqrt(2))/2e-5);
 
 mean_X_11 = mean(X_11);
 std_X_11 = std(X_11);
@@ -56,26 +56,24 @@ figure;
 
 bins = 30;
 histogram(X_11, bins,'Normalization', 'pdf','FaceAlpha',0.4); hold on 
-x = linspace(0,max(X_11),100);
-% pd = fitdist(X_11, 'Exponential');
-% y = pdf(pd, x);
+x_X11 = linspace(0,max(X_11),100);
 
-pd2 = 1 / mean_X_11 * exp(-x / mean_X_11);
+pd_X11 = 1 / mean_X_11 * exp(-x_X11 / mean_X_11);
 
-plot(x, pd2, 'r-', 'LineWidth', 2)
+plot(x_X11, pd_X11, '-', 'LineWidth', 2)
 title("pressure rms")
 
 figure;
 
 histogram(X_21, bins,'Normalization', 'pdf', 'FaceAlpha',0.4); hold on
 
-x = linspace(0,max(X_21),100);
-% pd = fitdist(X_21, 'Gamma');
-% y = pdf(pd, x);
-L0 = 20 * log10(mean_X_11/2e-5);
-pd2 = log(10) /10 * exp(log(10) /10 * (x - L0) - exp(log(10)/10 * (x - L0)));
+x_X21 = linspace(max(X_21)-40,max(X_21),100);
 
-plot(x, pd2, 'r-', 'LineWidth', 2)
+L0 = 20 * log10(mean(abs(G)/sqrt(2))/2e-5);
+
+pd_X21 = log(10) /10 * exp(log(10) /10 * (x_X21 - L0) - exp(log(10)/10 * (x_X21 - L0)));
+
+plot(x_X21, pd_X21, '-', 'LineWidth', 2)
 title("pressure rms")
 
 

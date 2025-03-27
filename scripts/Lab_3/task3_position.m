@@ -36,13 +36,13 @@ ylabel('L_p (dB SPL)');
 %% stats
 
 %p_rms
-p_rms = sqrt(p2_values/2);
+p_rms = p2_values/2;
 
 mean_p = mean(p_rms);
 std_p = std(p_rms);
 rel_std_p = std_p / mean_p * 100; % relative std (%)
 
-Lp_values = 20 * log10(p_rms / p_ref);
+Lp_values = 20 * log10(sqrt(p2_values)  / p_ref);
 mean_Lp = mean(Lp_values);
 std_Lp = std(Lp_values);
 
@@ -66,6 +66,18 @@ title(['Histogram of SPL across spatial points ' ...
     'Std = ' num2str(std_Lp, '%.2f') ' dB)']);
 xlabel('L_p (dB SPL)');
 ylabel('Counts');
+X_1 = p_rms; X_2 = Lp_values;
+
+x_X1 = linspace(0,max(X_1),100);
+
+pd_X1 = 1 / mean_p * exp(-x_X1 / mean_p  );
+
+x_X2 = linspace(max(X_2)-40,max(X_2),100);
+
+L0 = 20 * log10(mean(sqrt(abs(p2_values)))/2e-5);
+
+pd_X2 = log(10) /10 * exp(log(10) /10 * (x_X2 - L0) - exp(log(10)/10 * (x_X2 - L0)));
+
 
 %% OLD VERSION OF STATS PART
 
