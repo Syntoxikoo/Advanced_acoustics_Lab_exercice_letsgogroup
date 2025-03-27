@@ -4,9 +4,13 @@ c0 = 343;
 fs=  schroeder_rect_room(room, TR60,'c0', c0);
 % fs = find_f_modes(1,1,1);
 % fs = 700;
+% 
+% [i,j,k,f] = find_modes();
+% 
+% mode = [i,j,k];
 
 lambs = c0 / fs;
-N = 1000;
+N = 10000;
 
 x =  lambs/2 + (room(1)- lambs) .*rand(N,1);
 y =  lambs/2 + (room(2)- lambs) .*rand(N,1);
@@ -18,7 +22,7 @@ z =  lambs/2 + (room(3)- lambs) .*rand(N,1);
 rS = [0,0,0];
 rM = [x,y,z];
 
-G = green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',10, 'absorption', true, 'T60', TR60,'no_const',true);
+G = green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',20, 'absorption', false, 'T60', TR60,'no_const',true);
 
 figure;
 scatter(x,y, 10, 20*log10(abs(G)/2e-5))

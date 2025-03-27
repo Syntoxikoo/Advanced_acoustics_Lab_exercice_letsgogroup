@@ -70,7 +70,6 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
     rho0 = 1.21;
     omega = 2 * pi * f;
     k = omega / c0;
-    eps = 1e-9;
 
     lx = room(1); ly = room(2); lz = room(3);
     V = prod(room);
@@ -89,15 +88,36 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
     
     %----------------------- Compute mode frequency --------------------------------
     if ~isnan(S_mode)
+        if size(S_mode,2) >1
+        
+        nx = S_mode(:,1);
+        ny = S_mode(:,2);
+        nz = S_mode(:,3);
+        
+        else
+
         nx = S_mode(1);
         ny = S_mode(2);
         nz = S_mode(3);
+        end
     else
     [nx_grid, ny_grid, nz_grid] = ndgrid(0:max_mode, 0:max_mode, 0:max_mode);
     nx = nx_grid(:);
     ny = ny_grid(:);
     nz = nz_grid(:);
     end
+    
+    % Mode coefficients for normalization
+    enx = ones(size(nx));eny = ones(size(ny));enz = ones(size(nz));
+    
+    enx(nx ~= 0) = 2;
+    
+    eny(ny ~= 0) = 2;
+    
+    enz(nz~=0) = 2;
+
+    normA = sqrt(enx.*eny.*enz);
+
     pi_over_lx = pi / lx;
     pi_over_ly = pi / ly;
     pi_over_lz = pi / lz;
@@ -111,17 +131,17 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
     if absorption
         tau_m = T60/(6*log(10));
     else
-        tau_m = 1e16;
+        tau_m = eps;
     end  
 
     % --------------- Compute Gf for a paire of source - receiver ------------------
     if length(rM) <=3
         % Mode shapes at observation and source points 
-        phim_rM = cos(nx * pi_over_lx * rM(1)) .* ...
+        phim_rM = normA .* cos(nx * pi_over_lx * rM(1)) .* ...
                 cos(ny * pi_over_ly * rM(2)) .* ...
                 cos(nz * pi_over_lz * rM(3));
                 
-        phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
+        phim_rS = normA .* cos(nx * pi_over_lx * rS(1)) .* ...
                 cos(ny * pi_over_ly * rS(2)) .* ...
                 cos(nz * pi_over_lz * rS(3));
                 
@@ -148,11 +168,11 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
             cos_x = cos(nx * pi_over_lx * rM(:,1)');
             cos_y = cos(ny * pi_over_ly * rM(:,2)');
             cos_z = cos(nz * pi_over_lz * rM(:,3)');
-            phim_rM = cos_x .* cos_y .* cos_z;
+            phim_rM =  normA .* cos_x .* cos_y .* cos_z;
             phim_rM = phim_rM.';
             
                 
-            phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
+            phim_rS = normA .* cos(nx * pi_over_lx * rS(1)) .* ...
                     cos(ny * pi_over_ly * rS(2)) .* ...
                     cos(nz * pi_over_lz * rS(3));
             G = zeros(length(rM(:,1)), length(f));
@@ -205,10 +225,10 @@ function [G,f] = green_func_room_lab3(rM, rS, room, varargin)
             cos_x = cos(nx * pi_over_lx * coords(:,1)');
             cos_y = cos(ny * pi_over_ly * coords(:,2)');
             cos_z = cos(nz * pi_over_lz * coords(:,3)');
-            phim_rM = cos_x .* cos_y .* cos_z;
+            phim_rM = normA .* cos_x .* cos_y .* cos_z;
             phim_rM = phim_rM.';
                 
-            phim_rS = cos(nx * pi_over_lx * rS(1)) .* ...
+            phim_rS = normA .* cos(nx * pi_over_lx * rS(1)) .* ...
                     cos(ny * pi_over_ly * rS(2)) .* ...
                     cos(nz * pi_over_lz * rS(3));
                     
