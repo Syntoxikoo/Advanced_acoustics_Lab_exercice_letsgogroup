@@ -70,12 +70,10 @@ figure;
 histogram(X_21, bins,'Normalization', 'pdf', 'FaceAlpha',0.4); hold on
 
 x = linspace(0,max(X_21),100);
-% pd = fitdist(X_21, 'Gamma');
-% y = pdf(pd, x);
-L0 = 20 * log10(mean_X_11/2e-5);
-pd2 = log(10) /10 * exp(log(10) /10 * (x - L0) - exp(log(10)/10 * (x - L0)));
-
-plot(x, pd2, 'r-', 'LineWidth', 2)
+pd = fitdist(X_21, 'Gamma');
+pd2 = log(10) /10 * exp(log(10) /10 * (xx - ))
+y = pdf(pd, x);
+plot(x, y, 'r-', 'LineWidth', 2)
 title("pressure rms")
 
 
