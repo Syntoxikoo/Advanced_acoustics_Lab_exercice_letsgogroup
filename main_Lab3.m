@@ -9,10 +9,7 @@ addpath(genpath("datas"))
 task_1
 
 %mean_sq_p_iteration_comparison
-
-% ---------------------- PART 2 --------------
-%% compute part 2 
-
+%% part 2
 task2
 
 % ---------------------- PART 3 --------------
