@@ -10,7 +10,7 @@ theta=asin(2.*(rand(1,N)-0.5))+pi./2;
 for idx = 1:length(kr)
 
     wavSum = (sum( exp(1j .* (phi-kr(idx) .* cos(theta) ))));
-    y(idx) = 1/(2*N) .* sum(exp(1j.*phi)) .* wavSum';
+    y(idx) = 1/(2*N) .* sum(exp(1j.*phi)) .* conj(wavSum);
 end
 
 end

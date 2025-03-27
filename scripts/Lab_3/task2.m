@@ -4,8 +4,8 @@ clc
 
 krMAX= 8*pi;
 
-N = [1 10 100 1000]; % Number of Waves
-M = [1 10 100 1000]; % Number of Monte carlo simulations for averaging
+N = [1 10 100]; % Number of Waves
+M = [10 100 1000]; % Number of Monte carlo simulations for averaging
 
 kr = linspace(0,krMAX,1000); % kr Vector
 
