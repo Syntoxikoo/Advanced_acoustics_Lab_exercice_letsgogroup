@@ -50,7 +50,7 @@ mean_p = mean(p_rms);
 std_p = std(p_rms);
 rel_std_p = std_p / mean_p * 100; 
 
-Lp_values = 20 * log10(p_rms / p_ref);
+Lp_values = 20 * log10(sqrt(p2_values)  / p_ref);
 mean_Lp = mean(Lp_values);
 std_Lp = std(Lp_values);
 
