@@ -57,6 +57,9 @@ for n=1:length(N)
     yN(n,:) = avgp1p2 ./ avgmsP;
 end
 
+%% calculate the sinc function
+sinc=sin(kr)./kr;
+
 %% plotting
 
 % Define the number of rows and columns for tiled layout
@@ -76,15 +79,14 @@ corder = colororder;
 nexttile
 
 % Set X Y...
-Leg(1) = plot(kr, abs(yM(length(M),:)),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName",sprintf('M = %d', M(length(M)))); 
+Leg(1) = plot(kr, sinc,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName",'sin(kr)/kr'); 
 
-if length(M)>1
-    hold on;
-    for l=1:(length(M)-1)
-        Leg(l) = plot(kr, abs(yM(l,:)),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(l+1,:),"DisplayName",sprintf('M = %d', M(l)));
+hold on;
+    for l=1:(length(M))
+        Leg(l) = plot(kr, real(yM(l,:)),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(l+1,:),"DisplayName",sprintf('M = %d', M(l)));
     end
-    hold off;
-end
+hold off;
+
 grid on; hold on;
 
 % Set x-axis ticks at multiples of π
@@ -108,15 +110,15 @@ title(sprintf('N = %d',N(length(N))));
 nexttile
 
 % Set X Y...
-Leg(1) = plot(kr, abs(yN(length(N),:)),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName",sprintf('N = %d', N(length(N)))); 
+Leg(1) = plot(kr, sinc,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","sin(kr)/kr"); 
 
-if length(N)>1
-    hold on;
-    for l=1:(length(N)-1)
-        Leg(l) = plot(kr, abs(yN(l,:)),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(l+1,:),"DisplayName",sprintf('N = %d', N(l)));
+
+hold on;
+    for l=1:(length(N))
+        Leg(l) = plot(kr, real(yN(l,:)),"LineStyle",'--',"LineWidth", 1.0, "Color", corder(l+1,:),"DisplayName",sprintf('N = %d', N(l)));
     end
-    hold off;
-end
+hold off;
+
 grid on; hold on;
 
 % Set x-axis ticks at multiples of π
