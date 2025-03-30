@@ -38,7 +38,7 @@ title('Pressure level distribution');
 xlabel('Lp (dB re 20\mu Pa)');
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
-leg = legend(Leg, "Independant", 'correlated', 'NumColumns', 2); 
+leg = legend(Leg, "", 'P.wave exp. estimate', 'NumColumns', 2); 
 leg.Layout.Tile = 'north'; 
 
 
