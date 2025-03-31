@@ -9,8 +9,8 @@ fs=  schroeder_rect_room(room, TR60,'c0', c0);
 % mode = [i,j,k];
 
 lambs = c0 / fs;
-N = 1000;
-G_m =zeros(N,M);
+N = 10000;
+
 
 x =  lambs/2 + (room(1)- lambs) .*rand(N,1);
 y =  lambs/2 + (room(2)- lambs) .*rand(N,1);
@@ -73,3 +73,19 @@ disp("Part 4 : relative std pressure : "+ round(rel_std_X_11,3))
 disp("Part 4 : mean pressure Level : "+ round(mean_X_21,3))
 disp("Part 4 : std pressure Level : "+ round(std_X_21,3))
 disp("Part 4 : relative std pressure Level : "+ round(rel_std_X_21,3))
+
+% 
+% x =  (room(1)) .*rand(N,1);
+% y =  (room(2)) .*rand(N,1);s
+% z =  (room(3)) .*rand(N,1);
+
+
+x =  lambs/2 + (room(1)- lambs) .*rand(N,1);
+y =  lambs/2 + (room(2)- lambs) .*rand(N,1);
+z =  lambs/2 + (room(3)- lambs) .*rand(N,1);
+rS = [0,0,0];
+rM = [x,y,z];
+
+G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',30, 'absorption', true, 'T60', TR60,'no_const',true);
+X_12 = abs(G).^2 /2;
+X_22= 20 * log10(abs(G/sqrt(2))/2e-5);
