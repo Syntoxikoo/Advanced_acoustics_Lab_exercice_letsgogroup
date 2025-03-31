@@ -62,7 +62,6 @@ for idx = 1:length(M_values)
     std_Lp(idx) = std(Lp);
 end
 
-
 figure;
 subplot(3,1,1);
 semilogx(M_values, rel_std_p_hat_sq, 'o-', 'LineWidth', 2);

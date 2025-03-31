@@ -25,7 +25,7 @@ z =  lambs/2 + (room(3)- lambs) .*rand(N,1);
 rS = [0,0,0];
 rM = [x,y,z];
 
-% G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',30, 'absorption', true, 'T60', TR60,'no_const',true);
+% G= green_func_room_lab3(rM,rS,room, 'f', fs,'max_mode',10, 'absorption', true, 'T60', TR60,'no_const',true);
 load("datas/Lab_3/gren_PSD1_N_10000.mat")
 % end
 % G = mean(G_m,1);
@@ -45,11 +45,11 @@ X_21= 20 * log10(abs(G/sqrt(2))/2e-5);
 
 mean_X_11 = mean(X_11);
 std_X_11 = std(X_11);
-rel_std_X_11 = std_X_11 / mean_X_11 * 100; 
+rel_std_X_11 = std_X_11 / mean_X_11 ; 
 
 mean_X_21 = mean(X_21);
 std_X_21 = std(X_21);
-rel_std_X_21 = std_X_21 / mean_X_21 * 100; 
+rel_std_X_21 = std_X_21 / mean_X_21 ; 
 
 
 figure;
