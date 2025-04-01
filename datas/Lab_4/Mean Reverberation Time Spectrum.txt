@@ -1,0 +1,111 @@
+Header Size:	 78	 
+Pulse Version:	 42	 
+Decimal Symbol:	.	 
+Date Format:	dd-MM-yyyy	 
+Time Format:	HH:mm:ss:mmm	 
+Data Type:	Real	 
+Slice:	False	 
+Z-Axis type:	Linear	 
+Z-Axis size:	1	 
+Z-Axis unit:	 	 
+Z-Axis first value:	 0.0000000000e+000	 
+Z-Axis delta:	 1.0000000000e+000	 
+X-Axis type:	Octave	 
+X-Axis size:	24	 
+X-Axis unit:	Hz	 
+X-Axis first band:	17	 
+X-Axis octave:	3	 
+	 	 
+AmplitudeUnit:	s	 
+Analyzer:	CPB_Spectrum_Averaging	 
+AnalyzerName:	CPB Analyzer	 
+	 	 
+	 	 
+Bipolar:	False	 
+	 	 
+ChannelNo:	0	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Domain:	1	 
+Function:	Autospectrum	 
+	 	 
+InputRange:	 7.0710000000e+001	 
+InputSampleFrequency:	 3.2768000000e+004	 
+	 	 
+MultiBufferName:	Multi-buffer 1	 
+	 	 
+	 	 
+	 	 
+	 	 
+Power:	False	 
+PowerUnit:	s	 
+	 	 
+RecordLength:	 1.2500000000e-001	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Signal:	Signal 1	 
+	 	 
+SignalUnit:	V	 
+	 	 
+	 	 
+	 	 
+Title:	Mean Reverberation Time Spectrum	 
+	 	 
+	 	 
+	 	 
+Weight:	0	 
+	 	 
+	 	 
+TemplateName:	Working	 
+MeasurementName:	1.1	 
+MeasurementSlice:	False	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Z-index:	 	1
+Date:	 	Undefined
+Time:	 	Undefined
+Relative time:	 	Undefined
+Z-axis:	 	 0.0000000000e+000
+1	 5.0000000000e+001	 3.91918e+000
+2	 6.3000000000e+001	 4.99189e+000
+3	 8.0000000000e+001	 5.11047e+000
+4	 1.0000000000e+002	 6.55334e+000
+5	 1.2500000000e+002	 7.65684e+000
+6	 1.6000000000e+002	 8.29359e+000
+7	 2.0000000000e+002	 7.34415e+000
+8	 2.5000000000e+002	 7.40487e+000
+9	 3.1500000000e+002	 7.22335e+000
+10	 4.0000000000e+002	 6.36888e+000
+11	 5.0000000000e+002	 6.50543e+000
+12	 6.3000000000e+002	 6.20274e+000
+13	 8.0000000000e+002	 5.67235e+000
+14	 1.0000000000e+003	 5.16054e+000
+15	 1.2500000000e+003	 4.92115e+000
+16	 1.6000000000e+003	 4.39196e+000
+17	 2.0000000000e+003	 4.00499e+000
+18	 2.5000000000e+003	 3.61086e+000
+19	 3.1500000000e+003	 2.85544e+000
+20	 4.0000000000e+003	 2.30637e+000
+21	 5.0000000000e+003	 1.82138e+000
+22	 6.3000000000e+003	 1.41718e+000
+23	 8.0000000000e+003	 1.12488e+000
+24	 1.0000000000e+004	 9.52850e-001
+TagsBegin:	 	 
+TagsEnd:	 	 
+TagScalesBegin:	 	 
+TagScalesEnd:	 	 

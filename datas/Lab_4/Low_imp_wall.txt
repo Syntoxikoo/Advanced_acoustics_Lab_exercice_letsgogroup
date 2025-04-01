@@ -1,0 +1,114 @@
+Header Size:	 78	 
+Pulse Version:	 42	 
+Decimal Symbol:	.	 
+Date Format:	dd-MM-yyyy	 
+Time Format:	HH:mm:ss:mmm	 
+Data Type:	Real	 
+Slice:	False	 
+Z-Axis type:	Linear	 
+Z-Axis size:	1	 
+Z-Axis unit:	 	 
+Z-Axis first value:	 0.0000000000e+000	 
+Z-Axis delta:	 1.0000000000e+000	 
+X-Axis type:	Octave	 
+X-Axis size:	24	 
+X-Axis unit:	Hz	 
+X-Axis first band:	17	 
+X-Axis octave:	3	 
+	 	 
+AmplitudeUnit:	Pa	 
+Analyzer:	CPB_Spectrum_Averaging	 
+AnalyzerName:	CPB Analyzer	 
+	 	 
+	 	 
+Bipolar:	False	 
+	 	 
+ChannelNo:	0	 
+	 	 
+	 	 
+	 	 
+dBReference:	 4.0000000000e-010	 
+	 	 
+	 	 
+	 	 
+Domain:	1	 
+Function:	Autospectrum	 
+	 	 
+InputRange:	 7.0710000000e+001	 
+InputSampleFrequency:	 3.2768000000e+004	 
+	 	 
+MultiBufferName:	Input	 
+	 	 
+	 	 
+	 	 
+Overrun:	False	 
+Power:	True	 
+PowerUnit:	Pa²	 
+	 	 
+RecordLength:	 1.2825000000e+002	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Signal:	Signal 1	 
+	 	 
+SignalUnit:	Pa	 
+	 	 
+	 	 
+	 	 
+Title:	Autospectrum Signal 1	 
+	 	 
+	 	 
+	 	 
+Weight:	0	 
+	 	 
+	 	 
+TemplateName:	Working	 
+MeasurementName:	Low_imp_wall	 
+MeasurementSlice:	False	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Z-index:	 	1
+Date:	 	31-03-2025
+Time:	 	16:51:54:562
+Relative time:	 	 0.00000e+000
+Z-axis:	 	 0.0000000000e+000
+1	 5.0000000000e+001	 1.25836e-003
+2	 6.3000000000e+001	 2.74938e-003
+3	 8.0000000000e+001	 7.82518e-003
+4	 1.0000000000e+002	 6.59794e-003
+5	 1.2500000000e+002	 1.34289e-002
+6	 1.6000000000e+002	 1.00952e-002
+7	 2.0000000000e+002	 2.10985e-002
+8	 2.5000000000e+002	 2.99194e-002
+9	 3.1500000000e+002	 2.95000e-002
+10	 4.0000000000e+002	 2.58164e-002
+11	 5.0000000000e+002	 2.78357e-002
+12	 6.3000000000e+002	 3.08930e-002
+13	 8.0000000000e+002	 4.66969e-002
+14	 1.0000000000e+003	 4.95617e-002
+15	 1.2500000000e+003	 5.82309e-002
+16	 1.6000000000e+003	 5.09298e-002
+17	 2.0000000000e+003	 3.83786e-002
+18	 2.5000000000e+003	 2.10481e-002
+19	 3.1500000000e+003	 1.48624e-002
+20	 4.0000000000e+003	 1.20022e-002
+21	 5.0000000000e+003	 7.70790e-003
+22	 6.3000000000e+003	 4.44866e-003
+23	 8.0000000000e+003	 2.34259e-003
+24	 1.0000000000e+004	 1.19093e-003
+TagsBegin:	 	 
+OverLoad:	 	False
+OverLoadRatio: []	 	 1.19209e-007
+AveragingTime: []	 	 1.28250e+002
+TagsEnd:	 	 
+TagScalesBegin:	 	 
+TagScalesEnd:	 	 
