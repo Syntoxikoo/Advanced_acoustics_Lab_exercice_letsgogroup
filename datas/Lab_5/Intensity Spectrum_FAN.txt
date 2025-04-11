@@ -1,0 +1,114 @@
+Header Size:	 78	 
+Pulse Version:	 42	 
+Decimal Symbol:	.	 
+Date Format:	dd-MM-yyyy	 
+Time Format:	HH:mm:ss:mmm	 
+Data Type:	Real	 
+Slice:	False	 
+Z-Axis type:	Linear	 
+Z-Axis size:	1	 
+Z-Axis unit:	 	 
+Z-Axis first value:	 0.0000000000e+000	 
+Z-Axis delta:	 1.0000000000e+000	 
+X-Axis type:	Octave	 
+X-Axis size:	24	 
+X-Axis unit:	Hz	 
+X-Axis first band:	17	 
+X-Axis octave:	3	 
+	 	 
+AmplitudeUnit:	(W/m²)^½	 
+Analyzer:	CPB_Spectrum_Averaging	 
+AnalyzerName:	CPB Analyzer	 
+	 	 
+	 	 
+Bipolar:	True	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+dBReference:	 1.0000000000e-012	 
+	 	 
+	 	 
+	 	 
+Domain:	1	 
+Function:	Intensity Spectrum	 
+	 	 
+	 	 
+	 	 
+	 	 
+MultiBufferName:	Input	 
+	 	 
+	 	 
+	 	 
+Overrun:	False	 
+Power:	True	 
+PowerUnit:	W/m²	 
+	 	 
+RecordLength:	 9.1937500000e+001	 
+	 	 
+Ref_Signal:	Signal 2	 
+	 	 
+	 	 
+RefSignalUnit:	Pa	 
+	 	 
+	 	 
+Signal:	Signal 1	 
+	 	 
+SignalUnit:	Pa	 
+	 	 
+	 	 
+	 	 
+Title:	Intensity Spectrum	 
+Title1:	Working : Input : Input : CPB Analyzer	 
+	 	 
+	 	 
+Weight:	0	 
+	 	 
+	 	 
+TemplateName:	Working	 
+MeasurementName:	Input	 
+MeasurementSlice:	False	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+Z-index:	 	1
+Date:	 	09-04-2025
+Time:	 	16:24:59:874
+Relative time:	 	 0.00000e+000
+Z-axis:	 	 0.0000000000e+000
+1	 5.0000000000e+001	-2.76669e-005
+2	 6.3000000000e+001	-4.33008e-005
+3	 8.0000000000e+001	-5.69089e-004
+4	 1.0000000000e+002	-2.40827e-005
+5	 1.2500000000e+002	-1.43280e-005
+6	 1.6000000000e+002	-1.23807e-005
+7	 2.0000000000e+002	-1.34074e-005
+8	 2.5000000000e+002	-1.39509e-005
+9	 3.1500000000e+002	-1.40625e-005
+10	 4.0000000000e+002	-1.24042e-005
+11	 5.0000000000e+002	-1.25094e-005
+12	 6.3000000000e+002	-1.43229e-005
+13	 8.0000000000e+002	-2.59596e-005
+14	 1.0000000000e+003	-2.95174e-005
+15	 1.2500000000e+003	-3.26505e-005
+16	 1.6000000000e+003	-3.13003e-005
+17	 2.0000000000e+003	-2.63782e-005
+18	 2.5000000000e+003	-1.75789e-005
+19	 3.1500000000e+003	-1.41603e-005
+20	 4.0000000000e+003	-1.20057e-005
+21	 5.0000000000e+003	-7.60233e-006
+22	 6.3000000000e+003	-4.28150e-006
+23	 8.0000000000e+003	-2.29083e-006
+24	 1.0000000000e+004	-1.13160e-006
+TagsBegin:	 	 
+OverLoad:	 	False
+OverLoadRatio: []	 	 1.19209e-007
+AveragingTime: []	 	 9.19375e+001
+TagsEnd:	 	 
+TagScalesBegin:	 	 
+TagScalesEnd:	 	 

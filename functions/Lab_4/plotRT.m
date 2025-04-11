@@ -1,4 +1,4 @@
-function []=plotSP(fc,P1,P2,name)
+function []=plotRT(fc,RT,name)
 % function to plot the sound power of two measurements. one regular and one
 % at a wall
 % fc = 1/3 octave band center frequencies
@@ -11,7 +11,7 @@ function []=plotSP(fc,P1,P2,name)
 % Define the number of rows and columns for tiled layout
 nrows = 1;
 ncols = 1;
-heightScale = 0.65; % Adjust height scaling if needed
+heightScale = 0.5; % Adjust height scaling if needed
 
 % ------------------------------------------------------------------------------------------------------------
 [columnwidth, ~] = get_widths();
@@ -31,11 +31,11 @@ idx = find (fc == 100);
 x = 1:length(fc(idx:end)); % Generates equally spaced x-values
 
 % Set X Y...
-Leg(1) = plot(x, P1(idx:end),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","average"); 
+Leg(1) = plot(x, RT(idx:end),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","average"); 
 
 grid on; hold on;
 
-Leg(2) = plot(x, P2(idx:end),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:),"DisplayName","at wall"); 
+%Leg(2) = plot(x, P2(idx:end),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(2,:),"DisplayName","at wall"); 
 
 % Adjust x-axis labels to show original frequency values
 xticks(x);           % Set ticks to match x indices
@@ -50,7 +50,7 @@ title(name);
 
 % Uncomment these if individual tile labels are preferred
 xlabel('Frequency in Hz');
-ylabel('Sound Power in dB re 1pW');
+ylabel('T60 in s');
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 
