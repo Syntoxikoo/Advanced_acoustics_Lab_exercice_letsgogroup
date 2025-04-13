@@ -43,7 +43,7 @@ title('Relative Sound Pressure Level vs Distance at 700 Hz');
 xlabel('z (m)');
 ylabel('L_p (dB SPL)');
 
-%% Compute pressure-related statistics
+% Compute pressure-related statistics
 p2_rms = p2_values; % p^2_{rms} is simply p2_values
 
 mean_p2 = mean(p2_rms); % Expectation of mean square pressure
