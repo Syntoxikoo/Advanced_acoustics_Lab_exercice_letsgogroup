@@ -27,6 +27,23 @@ Omni_IS        = 10 * log10(Omni_IS        / 1e-12);
 Omni_1_IS      = 10 * log10(Omni_1_IS      / 1e-12);
 % and PI data is already in dB
 
+%% --- MICROPHONE FREE-FIELD CORRECTION (for IS spectra only) ---
+
+% Given correction values in dB
+corr_freqs = [1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000]; % Hz
+% corr_values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];          % dB
+corr_values = [0.1, 0.2, 0.4, 0.6, 1.0, 1.7, 2.5, 3.8, 5.8, 8.3];          % dB
+% Interpolate correction for your frequency vector
+mic_corr = interp1(corr_freqs, corr_values, f_IS, 'linear', 0); % extrapolated as 0 for <1250 Hz
+
+% Apply correction to all IS spectra (in dB)
+Dipole_IS      = Dipole_IS     + mic_corr;
+Dipole_fan_IS  = Dipole_fan_IS + mic_corr;
+Fan_IS         = Fan_IS        + mic_corr;
+Omni_IS        = Omni_IS       + mic_corr;
+Omni_1_IS      = Omni_1_IS     + mic_corr;
+
+
 %% --- PLOT: INTENSITY SPECTRUM (IS) ---
 figure('Position', figureSize);
 semilogx(f_IS, Dipole_IS,     'DisplayName','Dipole (Operator A)', 'LineWidth', lineWidth);
