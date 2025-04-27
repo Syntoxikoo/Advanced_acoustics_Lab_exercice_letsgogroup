@@ -36,7 +36,7 @@ lambda = c./fc;
 
 Pa=13.8.*V.*pa2./(rho.*c^2.*RT).*(1+(S.*lambda)./(8.*V));
 
-Pa=10*log10(Pa./w0);
+Pa=10*log10(abs(Pa)./w0);
 
 Pa=Pa+micCorrection;
 
