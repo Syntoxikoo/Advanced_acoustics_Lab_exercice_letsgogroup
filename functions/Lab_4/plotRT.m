@@ -30,8 +30,10 @@ idx = find (fc == 100);
 % Create an index-based x-axis for equal spacing
 x = 1:length(fc(idx:end)); % Generates equally spaced x-values
 
+RT_x = RT(idx:end);
+
 % Set X Y...
-Leg(1) = plot(x, RT(idx:end),"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","average"); 
+Leg(1) = plot(x, RT_x,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","average"); 
 
 grid on; hold on;
 
@@ -40,6 +42,7 @@ grid on; hold on;
 % Adjust x-axis labels to show original frequency values
 xticks(x);           % Set ticks to match x indices
 xticklabels(fc(idx:end));   % Label them with the actual frequency values
+xlim([x(1)-0.5, x(end)+0.5]);
 
 % Set axis limits 
 % ylim([0, 60]) 
