@@ -33,7 +33,7 @@ x = 1:length(fc(idx:end)); % Generates equally spaced x-values
 RT_x = RT(idx:end);
 
 % Set X Y...
-Leg(1) = plot(x, RT_x,"LineStyle",'-',"LineWidth", 1.0, "Color", corder(1,:),"DisplayName","average"); 
+Leg(1) = plot(x, RT(idx:end),"LineStyle",'-',"LineWidth", 1.0,"marker",".","MarkerSize",10, "Color", corder(1,:),"DisplayName","average"); 
 
 grid on; hold on;
 
@@ -46,14 +46,14 @@ xlim([x(1)-0.5, x(end)+0.5]);
 
 % Set axis limits 
 % ylim([0, 60]) 
-%xlim([100, 1000]) 
+xlim([1 x(end)]) 
 
 % Add title 
-title(name);
+% title(name);
 
 % Uncomment these if individual tile labels are preferred
-xlabel('Frequency in Hz');
-ylabel('T60 in s');
+xlabel('Frequency (Hz)');
+ylabel('T_{60} (s)');
 
 % ------------------------------------- Misc for Figure -----------------------------------------------------------
 

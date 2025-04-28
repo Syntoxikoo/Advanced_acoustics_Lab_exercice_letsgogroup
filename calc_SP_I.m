@@ -14,7 +14,7 @@ for ii = 1:size(datas,1)
     % Convert to SP
     SP_datas(ii,:) = datas(ii,:) * surf;
     %to dB
-    SP_datas(ii,:) = 10 * log10(SP_datas(ii,:)./w0);
+    SP_datas(ii,:) = 10 * log10(abs(SP_datas(ii,:))./w0);
     %Correct
     SP_datas(ii,:) = SP_datas(ii,:) + probCorrect;
 end
