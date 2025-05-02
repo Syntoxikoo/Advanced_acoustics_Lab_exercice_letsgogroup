@@ -1,6 +1,22 @@
-% Plot pressure magnitude =f( theta) for m = 0, 1, 2
+%%
 
-theta = linspace(0, 2*pi, 500);
+clear;
+close all;
+clc;
+addpath(genpath('scripts'))
+addpath(genpath("functions"))
+addpath(genpath("datas"))
+
+c = 343;            % Speed of sound (m/s)
+rho = 1.21;         % Air density (kg/m^3
+a = 0.1;            % Sphere radius (m)
+ka_vals = [0.1, 1, 5, 10];
+modes = [0, 1, 2];
+
+%% 1- Plot pressure magnitude = f( theta) for m = 0, 1, 2
+
+N_points = 500;
+theta = linspace(0, 2*pi, N_points);
 cth = cos(theta); % cos(theta) for Legendre
 
 %polynoms
@@ -17,7 +33,7 @@ P0_dB = 20 * log10(P0_norm);
 P1_dB = 20 * log10(P1_norm);
 P2_dB = 20 * log10(P2_norm);
 
-% eps = 1e-6; % avoid error
+% eps = 1e-10; % avoid error maybe?
 % P0_dB = 20 * log10(P0_norm + eps);
 % P1_dB = 20 * log10(P1_norm + eps);
 % P2_dB = 20 * log10(P2_norm + eps);
@@ -32,3 +48,122 @@ polarplot(theta, P2_dB, 'LineWidth', 2);
 legend('m = 0 (Monopole)', 'm = 1 (Dipole)', 'm = 2 (Quadrupole)', 'Location', 'southoutside');
 title('Normalized Pressure Magnitude (in dB) in function of \theta (in °)');
 grid on;
+
+
+%% 2- Pressure on Axis (theta = 0) = f(r) for ka = 0.1 (LF)
+
+ka = 0.1;
+k = ka / a;
+N_points = 500;
+r = logspace(log10(a), log10(1000*a), N_points);
+theta0 = 0;
+
+figure;
+hold on;
+
+for m = modes
+    h = sphankel2(m, k*r);
+    Pm = legendre(m, cos(theta0));
+    Pm = Pm(1);
+    
+    p = abs(h .* Pm);
+    p_norm = p / p(end);
+    
+    plot(r/a, 20*log10(p_norm + 1e-6), 'LineWidth', 2);
+end
+
+set(gca, 'XScale', 'log');
+xlabel('r / a');
+ylabel('Normalized Pressure (in dB)');
+legend('m=0','m=1','m=2');
+title('Pressure on axis in function of distance');
+grid on;
+
+%% Phase between pressure and radial particle velocity = f(r) for ka = 0.1
+
+figure;
+hold on;
+
+for m = modes
+    h = sphankel2(m, k*r);
+    
+    %derivative of spherical Hankel
+    dh = -(m+1)./ (k*r) .* h + sphankel2(m-1, k*r);
+    
+    u = -1j ./ (rho * c) .* dh;
+    p = h;
+
+    phi = angle(p ./ u);
+    
+    plot(r/a, rad2deg(phi), 'LineWidth', 2);
+end
+
+set(gca, 'XScale', 'log');
+xlabel('r / a');
+ylabel('Phase Difference (in °)');
+legend('m=0','m=1','m=2');
+title('Phase between pressure and particle velocity in function of r/a');
+grid on;
+
+%% 4- Far-field pressure = f(theta) at ka = 0.1, 1, 5, 10 normalized by axial
+
+N_points = 500;
+theta = linspace(0, 2*pi, N_points);
+cth = cos(theta);
+r_far = 100 * a;
+
+figure;
+
+for ka = ka_vals
+    k = ka / a;
+    
+    p_total = zeros(size(theta));
+    
+    for m = 0:30 %truncated
+        h_far = sphankel2(m, k*r_far);
+        Pm = legendre(m, cth);
+        Pm = Pm(1,:);
+        p_total = p_total + (2*m + 1) * h_far .* Pm;
+    end
+    
+    p_total = abs(p_total);
+    p_norm = p_total / max(p_total);
+    
+    polarplot(theta, 20*log10(p_norm + 1e-6), 'LineWidth', 2);
+    hold on;
+end
+
+legend('ka=0.1', 'ka=1', 'ka=5', 'ka=10');
+title('Far-field Pressure in funcion of \theta (Normalized by Axial Pressure)');
+%rlim([-40 0]);
+
+%% 5- Far-field pressure normalized by free-field point source
+
+%re-use theta from part 4
+figure;
+
+for ka = ka_vals
+    k = ka / a;
+    
+    p_total = zeros(size(theta));
+    
+    for m = 0:30 %truncated
+        h_far = sphankel2(m, k*r_far);
+        dh_a = -(m+1)./ (k*a) .* sphankel2(m, k*a) + sphankel2(m-1, k*a);
+        Pm = legendre(m, cth);
+        Pm = Pm(1,:);
+        
+        coeff = (2*m + 1) ./ dh_a;
+        p_total = p_total + coeff .* h_far .* Pm;
+    end
+    
+    p_free = abs(exp(-1j * k * r_far) ./ r_far); %ff of point source    
+    p_norm = abs(p_total) / p_free;
+    
+    polarplot(theta, 20*log10(p_norm + 1e-6), 'LineWidth', 2);
+    hold on;
+end
+
+legend('ka=0.1', 'ka=1', 'ka=5', 'ka=10');
+title('Far-field Pressure normalized by free-field point source');
+%rlim([-40 20]);
