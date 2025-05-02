@@ -19,10 +19,14 @@ N_points = 500;
 theta = linspace(0, 2*pi, N_points);
 cth = cos(theta); % cos(theta) for Legendre
 
-%polynoms
-P0 = legendre(0, cth); P0 = P0(1,:);
-P1 = legendre(1, cth); P1 = P1(1,:);
-P2 = legendre(2, cth); P2 = P2(1,:);
+%we only compute the polynoms becasue we normalize the pressure (which cancels the other terms)
+%so p_norm = abs(P_m(cos(theta)))/abs(P_m(1))
+P0 = legendre(0, cth); 
+P0 = P0(1,:);
+P1 = legendre(1, cth); 
+P1 = P1(1,:);
+P2 = legendre(2, cth); 
+P2 = P2(1,:);
 
 % normalization by axial pressure P_i(1)
 P0_norm = abs(P0) / abs(P0(1));
@@ -49,7 +53,6 @@ legend('m = 0 (Monopole)', 'm = 1 (Dipole)', 'm = 2 (Quadrupole)', 'Location', '
 title('Normalized Pressure Magnitude (in dB) in function of \theta (in °)');
 grid on;
 
-
 %% 2- Pressure on Axis (theta = 0) = f(r) for ka = 0.1 (LF)
 
 ka = 0.1;
@@ -61,6 +64,7 @@ theta0 = 0;
 figure;
 hold on;
 
+% now p = Am * h_m^(2)(kr) 
 for m = modes
     h = sphankel2(m, k*r);
     Pm = legendre(m, cos(theta0));
