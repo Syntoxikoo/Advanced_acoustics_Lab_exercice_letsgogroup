@@ -1,5 +1,5 @@
-function p = prad_sph_src(m, r, the, k, a, varargin)
-    %   Calculates pressure field from a spherical source of radius a 
+function ur, uthe = urad_sph_src(m, r, the, k, a, varargin)
+    %   Calculates particle velocity from a spherical source of radius a 
     %   with modal order m at positions given 
     %   by spherical coordinates (r, the). The frequency of the wave is given in term
     %   of the wave number.
@@ -13,11 +13,11 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     %
     %   Optional parameters:
     %       Q         - volume velocity (default: 1e-3)
-    %       'norm_ax' - compute the normalized pressure relatvie to the  on-axis pressure (default: false)
     %       'amp'     - calculate actual amplitude (default: true)
     %
     %   Output:
-    %       p       - complex pressure field [Pa]
+    %       ur       - particle velocity [r,the] in the r directiong
+    %       uthe       - particle velocity [r,the]  in the theta direction
     
     p = inputParser;
     addRequired(p, 'm');
@@ -26,13 +26,14 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     addRequired(p, 'k');
     addRequired(p, 'a');
     addParameter(p, 'Q', 1e-3);
-    addParameter(p, 'norm_ax', false);
     addParameter(p, 'amp', true);
+    addParameter(p, 'dthe',false);
+
     
     parse(p, m, r, the, k, a, varargin{:});
     Q = p.Results.Q;
-    norm_ax = p.Results.norm_ax;
     amp = p.Results.amp;
+    dthe = p.Results.dthe;
 
     c = 343;          
     rho = 1.21; 
@@ -41,7 +42,8 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     kr = k*r;
     omega = k * c;
 
-    p = zeros(length(r),length(the));
+    ur = zeros(length(r),length(the));
+    uthe = zeros(length(r),length(the));
     for ii = 1:length(m)
         P = legendre(m(ii),cth);
         Pm = P(1,:);
@@ -52,11 +54,13 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
         else
             Am = 1;
         end
+          
+        ur = ur + (-Am) / (1j * rho * c) * Pm .*dr_sphankel2(m(ii),kr);
 
-        if norm_ax == true
-            p = p + Am * Pm / Pm(1);
-        else
-            p = p +  Am .* Pm .*sphankel2(m(ii),kr); % time dependencies is not implemented on purpose
+        if dthe == true
+            dP = legendre_derivative(m(ii),the,P);
+            uthe = uthe + (-Am) / (1j * rho * omega) * dP(1,:) .* (sphankel2(m(ii),kr)./ r);
+    
         end
     end
 
