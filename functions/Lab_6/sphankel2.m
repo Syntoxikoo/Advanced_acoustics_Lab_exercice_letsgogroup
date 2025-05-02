@@ -1,4 +1,4 @@
-                                    function h = sphankel2(m, x)
+function h = sphankel2(m, r)
 % Compute spherical Hankel function of the second kind
-h = sqrt(pi./(2*x)) .* besselh(m+0.5, 2, x);
+    h = sqrt(pi./(2*r)) .* besselh(m+0.5, 2, r);    
 end

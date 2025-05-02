@@ -15,7 +15,7 @@ modes = [0, 1, 2];
 
 %% 1- Plot pressure magnitude = f( theta) for m = 0, 1, 2
 
-N_points = 500;
+N_points = 1000;
 theta = linspace(0, 2*pi, N_points);
 cth = cos(theta); % cos(theta) for Legendre
 
@@ -26,18 +26,18 @@ P0 = P0(1,:);
 P1 = legendre(1, cth); 
 P1 = P1(1,:);
 P2 = legendre(2, cth); 
-P2 = P2(1,:);
+P2 = P2(2,:);
 
 % normalization by axial pressure P_i(1)
 P0_norm = abs(P0) / abs(P0(1));
 P1_norm = abs(P1) / abs(P1(1));
 P2_norm = abs(P2) / abs(P2(1));
 
-P0_dB = 20 * log10(P0_norm);
-P1_dB = 20 * log10(P1_norm);
-P2_dB = 20 * log10(P2_norm);
+P0_dB = 20 * log10(P0_norm/2e-5);
+P1_dB = 20 * log10(P1_norm/2e-5);
+P2_dB = 20 * log10(P2_norm/2e-5);
 
-% eps = 1e-10; % avoid error maybe?
+% % eps = 1e-10; % avoid error maybe?
 % P0_dB = 20 * log10(P0_norm + eps);
 % P1_dB = 20 * log10(P1_norm + eps);
 % P2_dB = 20 * log10(P2_norm + eps);
@@ -52,7 +52,17 @@ polarplot(theta, P2_dB, 'LineWidth', 2);
 legend('m = 0 (Monopole)', 'm = 1 (Dipole)', 'm = 2 (Quadrupole)', 'Location', 'southoutside');
 title('Normalized Pressure Magnitude (in dB) in function of \theta (in °)');
 grid on;
+%%
+N_points = 360;
+theta = linspace(0,2 * pi, N_points);
+k=  1; % random for test
+a= 0.1;
+p0 = prad_sph_src(0,1,theta,k,a,"amp",false,"norm_ax",true);
+p1 = prad_sph_src(1,1,theta,k,a,"amp",false,"norm_ax",true);
+p2 = prad_sph_src(2,1,theta,k,a,"amp",false,"norm_ax",true);
 
+figure;
+polarplot(theta,20*log10(p0/2e-5))
 %% 2- Pressure on Axis (theta = 0) = f(r) for ka = 0.1 (LF)
 
 ka = 0.1;
