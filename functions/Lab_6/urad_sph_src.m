@@ -1,4 +1,4 @@
-function ur, uthe = urad_sph_src(m, r, the, k, a, varargin)
+function [ur, uthe] = urad_sph_src(m, r, the, k, a, varargin)
     %   Calculates particle velocity from a spherical source of radius a 
     %   with modal order m at positions given 
     %   by spherical coordinates (r, the). The frequency of the wave is given in term
@@ -14,6 +14,7 @@ function ur, uthe = urad_sph_src(m, r, the, k, a, varargin)
     %   Optional parameters:
     %       Q         - volume velocity (default: 1e-3)
     %       'amp'     - calculate actual amplitude (default: true)
+    %       'dthe"    - bool, if true compute uthe
     %
     %   Output:
     %       ur       - particle velocity [r,the] in the r directiong
@@ -39,7 +40,7 @@ function ur, uthe = urad_sph_src(m, r, the, k, a, varargin)
     rho = 1.21; 
     
     cth = cos(the);
-    kr = k*r;
+    kr = k*r.';
     omega = k * c;
 
     ur = zeros(length(r),length(the));

@@ -8,15 +8,15 @@ Nleg = 1;
 height = get_height() * heightScale; 
 fig = figure("Position", [0, 0, columnwidth*0.7, height], "Units", "points");
 tiled = tiledlayout(nrows, ncols, "TileSpacing", "tight", "Padding", "loose");
-corder = colororder;
+corder = ["#181748","#810100","#575579","#7F7F7F"];
 
 
 tile1 = nexttile;
 
 
-Leg(1)=polarplot(theta, SPL(p0), 'LineWidth', 1.5,Color=corder(1,:)); hold on;
-Leg(2)=polarplot(theta, SPL(p1), 'LineWidth', 1.5,Color=corder(2,:)); 
-Leg(3)=polarplot(theta, SPL(p2), 'LineWidth', 1.5,Color=corder(3,:)); 
+Leg(1)=polarplot(theta, SPL(p0), 'LineWidth', 1.5,Color=corder(1)); hold on;
+Leg(2)=polarplot(theta, SPL(p1), 'LineWidth', 1.5,Color=corder(2)); 
+Leg(3)=polarplot(theta, SPL(p2), 'LineWidth', 1.5,Color=corder(3)); 
 
 
 grid on;
@@ -34,3 +34,4 @@ leg1.Layout.Tile = 'north';
 hold off;
 
 saveas(gcf,'figures/6plot_patternSPthe.svg')
+

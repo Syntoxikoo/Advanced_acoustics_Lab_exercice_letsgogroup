@@ -84,7 +84,7 @@ for m = modes
     p = abs(h .* Pm);
     p_norm = p / p(end);
     
-    plot(r/a, 20*log10(p_norm + 1e-6), 'LineWidth', 2);
+    plot(r/a, 20*log10(p_norm /2e-5+ 1e-6), 'LineWidth', 2);
 end
 
 set(gca, 'XScale', 'log');
@@ -133,19 +133,22 @@ for ka = ka_vals
     k = ka / a;
     
     p_total = zeros(size(theta));
+    p2 = zeros(size(theta));
     
     for m = 0:30 %truncated
         h_far = sphankel2(m, k*r_far);
         Pm = legendre(m, cth);
         Pm = Pm(1,:);
         p_total = p_total + (2*m + 1) * h_far .* Pm;
+        p2 = p2  + Pm;
     end
     
     p_total = abs(p_total);
     p_norm = p_total / max(p_total);
     
-    polarplot(theta, 20*log10(p_norm + 1e-6), 'LineWidth', 2);
-    hold on;
+    polarplot(theta, 20*log10(p_norm /2e-5), 'LineWidth', 2);hold on ;
+    % polarplot(theta, 20*log10(abs(p2) /2e-5), 'LineWidth', 2, "LineStyle","--");
+
 end
 
 legend('ka=0.1', 'ka=1', 'ka=5', 'ka=10');

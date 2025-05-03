@@ -38,7 +38,7 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     rho = 1.21; 
     
     cth = cos(the);
-    kr = k*r;
+    kr = k*r.';
     omega = k * c;
 
     p = zeros(length(r),length(the));
