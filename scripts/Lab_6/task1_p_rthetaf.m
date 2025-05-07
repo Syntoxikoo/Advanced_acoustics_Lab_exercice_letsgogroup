@@ -122,34 +122,39 @@ grid on;
 
 %% 4- Far-field pressure = f(theta) at ka = 0.1, 1, 5, 10 normalized by axial
 
-N_points = 500;
+N_points = 100;
 theta = linspace(0, 2*pi, N_points);
 cth = cos(theta);
 r_far = 100 * a;
 
 figure;
+% tiledlayout(1,2)
+% p2 = zeros(length(theta),length(ka_vals));
 
+% ii = 0;
+% nexttile
 for ka = ka_vals
+    % ii = ii +1;
     k = ka / a;
     
     p_total = zeros(size(theta));
-    p2 = zeros(size(theta));
     
+    p_front = 0
     for m = 0:30 %truncated
         h_far = sphankel2(m, k*r_far);
         Pm = legendre(m, cth);
         Pm = Pm(1,:);
-        p_total = p_total + (2*m + 1) * h_far .* Pm;
-        p2 = p2  + Pm;
+        dH = dr_sphankel2(m,a);
+        p_total = p_total + (2*m + 1) * h_far .* Pm * dH;
+        % p_front = p_front + (2*m+1 ) * h_far *dH;
+        
     end
+    % p_norm = p_total/p_front;
+    polarplot(theta, 20*log10(p_total /2e-5), 'LineWidth', 2);hold on ;
     
-    p_total = abs(p_total);
-    p_norm = p_total / max(p_total);
-    
-    polarplot(theta, 20*log10(p_norm /2e-5), 'LineWidth', 2);hold on ;
-    % polarplot(theta, 20*log10(abs(p2) /2e-5), 'LineWidth', 2, "LineStyle","--");
-
 end
+% nexttile 
+% polarplot(theta, 20*log10(abs(p2) /2e-5), 'LineWidth', 2, "LineStyle","--"); hold on;
 
 legend('ka=0.1', 'ka=1', 'ka=5', 'ka=10');
 title('Far-field Pressure in funcion of \theta (Normalized by Axial Pressure)');

@@ -1,6 +1,6 @@
-function p = prad_sph_src(m, r, the, k, a, varargin)
-    %   Calculates pressure field from a spherical source of radius a 
-    %   with modal order m at positions given 
+function p = p_pS_sph(m, r, the, k, a, varargin)
+    %   Calculates pressure field from a point source placed on a rigid sphere
+    %    of radius a with modal order m at positions given 
     %   by spherical coordinates (r, the). The frequency of the wave is given in term
     %   of the wave number.
     %
@@ -18,7 +18,6 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     %
     %   Output:
     %       p       - complex pressure field [Pa]
-    
     p = inputParser;
     addRequired(p, 'm');
     addRequired(p, 'r');
@@ -40,24 +39,25 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     cth = cos(the);
     kr = k*r.';
     omega = k * c;
-
+    [~,idxthe] = min(abs(the));
+    Uthe = zeros(1,length(the));
+    Uthe(idxthe) =1;
     p = zeros(length(r),length(the));
     for ii = 1:length(m)
+        disp(m(ii))
         P = legendre(m(ii),cth);
         Pm = P(1,:);
 
         if amp == true
-            Um = (m(ii)+1/2) * Q/ (2*pi*a^2); % not totally sure about this one
+            Um = (m(ii)+1/2) * Q/ (2*pi*a^2) * Uthe; % not totally sure about this one
             Am = -1j * omega * rho *  Um / dr_sphankel2(m(ii),k*a);
         else
             Am = 1;
         end
 
-        if norm_ax == true
-            p = p + Am * Pm / Pm(1);
-        else
-            p = p +  Am .* Pm .*sphankel2(m(ii),kr); % time dependencies is not implemented on purpose
-        end
+
+        p = p +  Am .* Pm .*sphankel2(m(ii),kr); % time dependencies is not implemented on purpose
+        
     end
 
 end
