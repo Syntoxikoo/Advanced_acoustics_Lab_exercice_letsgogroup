@@ -18,12 +18,12 @@ grid on ; hold off
 
 xlabel("r / a (m)")
 ylabel("Phase angle (rad)")
-ylim([-pi pi])
-yticks([-pi, -pi/2, 0, pi/2, pi])
-yticklabels(["-\pi","-\pi/2","0","\pi/2", "\pi"])
+ylim([0 pi/2])
+yticks([0 pi/4, pi/2])
+yticklabels(["0","\pi/4","\pi/2"])
 
 leg1 = legend('m = 0, Monopole', 'm = 1, Dipole', 'm = 2, Quadrupole',NumColumns=3);
 leg1.Layout.Tile = 'north';
-title("Pressure on axis in function of distance")
+title("Phase angle between sound pressure and radial component of the particle velocity")
 hold off
 saveas(gcf,'figures/phasediff_for_r_m123.svg')

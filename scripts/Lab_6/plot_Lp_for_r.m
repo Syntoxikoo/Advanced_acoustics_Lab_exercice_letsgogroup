@@ -11,7 +11,7 @@ corder = ["#181748","#810100","#575579","#7F7F7F"];
 
 tile1 = nexttile;
 for ii = 1 : length(m)
-    semilogx(r/a, 20*log10(abs(p(:,ii))/2e-5), 'LineWidth', 1.5,"Color", corder(ii));hold on
+    semilogx(r/a, SPL(p(:,ii)), 'LineWidth', 1.5,"Color", corder(ii));hold on
 end
 grid on ; hold off
 

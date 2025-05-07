@@ -116,10 +116,10 @@ plot_pattern_pS_sph_norm2
 
 %%
 load("cmap.mat")
-N_points = 1000;
-theta = linspace(0,pi, N_points/2);
+N_points = 100;
+theta = linspace(0,2*pi, N_points/2);
 
-phi = linspace(0,2*pi, N_points);
+phi = linspace(-pi,pi, N_points);
 [theta,phi]=meshgrid(theta,phi);
 
 figure;
@@ -127,30 +127,39 @@ set(gcf, 'Color', 'white');
 grid off
 M = 3;
 N = 3;
-i = 0;
+for m = 0:m
 for n = 0:N
-    for m = 0:M
-        if m>=n
-            i = i+1;
-            Yn1 = sph_harmonic(m,n,theta,phi);
-            [x, y, z] = sph2cart(theta, phi-pi/2, abs(Yn1).^2);
-            surf(x, y, z,"EdgeColor","none"); 
-            title("Spherical Harmonic Visualization (absolute), m: "+m+", n: "+n);
-            axis equal off
-            colormap(smoothColormap)
-            drawnow; % Force plot update
-            pause(1); % Adjust speed
-            frame(i) = getframe(gcf); % Capture frames for video export
-        end
-    end 
+    Yn1 = sph_harmonic(m,n,theta,phi);
+    [x, y, z] = sph2cart(theta, phi-pi/2, real(Yn1));
+    surf(x, y, z); 
+    title('Spherical Harmonic Visualization');
+    colormap(smoothColormap)
+    drawnow; % Force plot update
+    pause(0.1); % Adjust speed
+    frame(i) = getframe(gcf); % Capture frames for video export
 end
 
 
-v = VideoWriter('figures/sphericalharmoabsolute.mp4', 'MPEG-4');
-v.FrameRate = 1;
+v = VideoWriter('figures/sphericalharmoreal.mp4', 'MPEG-4');
 open(v);
 writeVideo(v, frame);
 close(v);
 
-%%
-funcharm(2,2)
+
+
+m = 2;
+n = 0;
+
+
+Yn1 = sph_harmonic(m,n,theta,phi);
+[x, y, z] = sph2cart(theta, phi-pi/2, real(Yn1));
+
+figure;
+surf(x, y, z); 
+load("cmap.mat")
+colormap(smoothColormap)
+colorbar();
+title('Spherical Harmonic Visualization');
+xlabel('x');
+ylabel('y');
+zlabel('z');
