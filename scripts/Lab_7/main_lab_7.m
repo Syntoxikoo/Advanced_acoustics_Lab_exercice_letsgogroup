@@ -15,7 +15,7 @@ L = 1;               % Mic array size in x and y axis (m)
 Lx=L;
 Ly=L;
 M = 15;            % Number of microphones per x/y dimension
-N = 512;              % Number of lines per dimension of the FFTs (for zero padding)
+N = 1024;              % Number of lines per dimension of the FFTs (for zero padding)
 f = 1000;             % Frequency (Hz)
 omega = 2 * pi * f;   
 k = omega / c;        
@@ -45,12 +45,6 @@ ky = -ky;                  % Correct FFT sign convention???
 
 
 
-
-
-
-
-
-
 %% TASK A - Source at (0,0,-0.1)
 z_source = -0.1;                                                 % Normal (z) distance of the monopole to the array plane (x,y) 
 R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);                      % Distance from the monopole to each microphone position (15x15)
@@ -71,7 +65,9 @@ xlabel('x [m]'); ylabel('y [m]');
 zlabel('z [m]');
 grid on;
 legend('Microphones','Source');
-view(3); axis equal;
+view(3);
+zlim([-0.2, 0.2])
+%  axis equal;
 
 figure(3);
 pcolor(X, Y, SPL); shading flat; colorbar;
@@ -91,8 +87,6 @@ xlabel('x (m)'); ylabel('y (m)');
 % being further and further away from the center microphone also receive a
 % wave that travelled during more time, therefore the phase also follows a
 % sinusoidal behavior in all radial directions to the center microphone. 
-
-
 
 
 
@@ -184,5 +178,43 @@ pcolor(KX, KY, angle(P_k));
 shading flat; 
 colorbar;
 title('Task C: Wavenumber phase spectrum at corner (L/2, L/2)');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+
+%% TASK D - Source at 3m (L0, 0, -0.1)
+
+f = 1000;
+omega = 2 * pi * f;
+k = omega / c;
+x0 = 0; y0 = 0;                              % New source coordinates
+R = sqrt((X - x0).^2 + (Y - y0).^2 + (3).^2);
+p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
+P_k = fftshift(fft2(p, N, N));
+
+figure(9);
+hold on;
+plot3(X(:), Y(:), zeros(size(X(:))), 'bo', 'MarkerFaceColor', 'b');
+plot3(0, 0, -3, 'rp', 'MarkerSize', 15, 'MarkerFaceColor', 'r');
+title('Task C: Microphone Array and Source Position (3D view)');
+xlabel('x [m]'); 
+ylabel('y [m]'); 
+zlabel('z [m]');
+grid on;
+legend('Microphones','Source');
+view(3); axis equal;
+
+
+figure(10);
+pcolor(KX, KY, abs(P_k)); 
+shading flat; 
+colorbar;
+title('Task C: Wavenumber magnitude spectrum at corner (0, 0)');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+figure(11);
+pcolor(KX, KY, angle(P_k)); 
+shading flat; 
+colorbar;
+title('Task C: Wavenumber phase spectrum at corner (0, 0)');
 xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 

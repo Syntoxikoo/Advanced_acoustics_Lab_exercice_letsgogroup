@@ -28,11 +28,13 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
     addParameter(p, 'Q', 1e-3);
     addParameter(p, 'norm_ax', false);
     addParameter(p, 'amp', true);
+    addParameter(p, 'tricks', false);
     
     parse(p, m, r, the, k, a, varargin{:});
     Q = p.Results.Q;
     norm_ax = p.Results.norm_ax;
-    amp = p.Results.amp;
+    amp = p.Results.amp; 
+    tricks= p.Results.tricks;
 
     c = 343;          
     rho = 1.21; 
@@ -49,6 +51,9 @@ function p = prad_sph_src(m, r, the, k, a, varargin)
         if amp == true
             Um = (m(ii)+1/2) * Q/ (2*pi*a^2); % not totally sure about this one
             Am = -1j * omega * rho *  Um / dr_sphankel2(m(ii),k*a);
+            if tricks == true
+            Am =  (m(ii)+1/2) / dr_sphankel2(m(ii),k*a);
+            end
         else
             Am = 1;
         end

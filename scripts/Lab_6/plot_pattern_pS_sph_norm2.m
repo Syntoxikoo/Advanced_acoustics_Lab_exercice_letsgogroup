@@ -14,13 +14,13 @@ corder = ["#181748","#810100","#575579","#7F7F7F"];
 tile1 = nexttile;
 
 for ii = 1: length(p0)
-    Leg(ii)=polarplot(theta, SPL(p(:,ii)/p0(ii)), 'LineWidth', 1.5,Color=corder(ii)); hold on;
+    Leg(ii)=polarplot(theta, SPL(abs(p(:,ii))), 'LineWidth', 1.5,Color=corder(ii)); hold on;
 end
 
 grid on;
 pax = gca;
 pax.ThetaZeroLocation = "top";
-% rlim([-60, 0]);
+rlim([60, 115]);
 % rticks(-60:6:0);
 thetaticks(-180:15:180);
 thetalim([-180 180]);
