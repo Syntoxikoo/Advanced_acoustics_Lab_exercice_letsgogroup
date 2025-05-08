@@ -105,6 +105,8 @@ k = omega / c;
 R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);
 p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
 P_k = fftshift(fft2(p, N, N));
+kz = sqrt(k^2 - KX.^2 - KY.^2);
+
 
 figure(5);
 pcolor(KX, KY, abs(P_k)); 
@@ -120,6 +122,16 @@ colorbar;
 title('Task B: Wavenumber spectrum phase (rad) at 1kHz');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
+figure(7);
+pcolor(KX, KY, real(kz)); shading flat; colorbar;
+title('Task B: Real part of k_z at 1kHz');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+figure(8);
+pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+title('Task B: Imag part of k_z at 1kHz');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
 % Changing f=100 to f500
 f = 500;
 omega = 2 * pi * f;
@@ -127,22 +139,31 @@ k = omega / c;
 R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);
 p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
 P_k = fftshift(fft2(p, N, N));
+kz = sqrt(k^2 - KX.^2 - KY.^2);
 
-figure(7);
+figure(9);
 pcolor(KX, KY, abs(P_k)); 
 shading flat; 
 colorbar;
 title('Task B: Wavenumber spectrum (rad/m) at 500Hz');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
-figure(8);
+figure(10);
 pcolor(KX, KY, angle(P_k)); 
 shading flat; 
 colorbar;
 title('Task B: Wavenumber spectrum phase (rad) at 500Hz');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
+figure(11);
+pcolor(KX, KY, real(kz)); shading flat; colorbar;
+title('Task B: Real part of k_z at 500 Hz');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
+figure(12);
+pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+title('Task B: Imag part of k_z at 500 Hz');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
 % HAS TO BE ANALYSED
 
@@ -159,8 +180,9 @@ x0 = L/2; y0 = L/2;                                       % New source coordinat
 R = sqrt((X - x0).^2 + (Y - y0).^2 + (0 - z_source).^2);
 p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
 P_k = fftshift(fft2(p, N, N));
+kz = sqrt(k^2 - KX.^2 - KY.^2);
 
-figure(9);
+figure(13);
 hold on;
 plot3(X(:), Y(:), zeros(size(X(:))), 'bo', 'MarkerFaceColor', 'b');
 plot3(x0, y0, -0.1, 'rp', 'MarkerSize', 15, 'MarkerFaceColor', 'r');
@@ -171,18 +193,29 @@ grid on;
 legend('Microphones','Source');
 view(3); axis equal;
 
-
-figure(10);
+figure(14);
 pcolor(KX, KY, abs(P_k)); 
 shading flat; 
 colorbar;
 title('Task C: Wavenumber magnitude spectrum at corner (L/2, L/2)');
 xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
-figure(11);
+figure(15);
 pcolor(KX, KY, angle(P_k)); 
 shading flat; 
 colorbar;
 title('Task C: Wavenumber phase spectrum at corner (L/2, L/2)');
 xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+figure(16);
+pcolor(KX, KY, real(kz)); shading flat; colorbar;
+title('Task B: Real part of k_zz for cornered source');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+figure(17);
+pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+title('Task B: Imag part of k_z for cornered source');
+xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+% HAS TO BE ANALYSED
 
