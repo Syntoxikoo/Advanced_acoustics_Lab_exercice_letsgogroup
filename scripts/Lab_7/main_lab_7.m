@@ -5,7 +5,6 @@
 % Authors: s243674, s243592, s243590, s242987
 
 clear; close all; clc;
-
 %% Constants
 
 c = 343;            % Speed of sound (m/s)
@@ -45,12 +44,6 @@ ky = -ky;                  % Correct FFT sign convention???
 
 
 
-
-
-
-
-
-
 %% TASK A - Source at (0,0,-0.1)
 z_source = -0.1;                                                 % Normal (z) distance of the monopole to the array plane (x,y) 
 R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);                      % Distance from the monopole to each microphone position (15x15)
@@ -71,7 +64,9 @@ xlabel('x [m]'); ylabel('y [m]');
 zlabel('z [m]');
 grid on;
 legend('Microphones','Source');
-view(3); axis equal;
+view(3);
+zlim([-0.2, 0.2])
+%  axis equal;
 
 figure(3);
 pcolor(X, Y, SPL); shading flat; colorbar;
@@ -320,3 +315,102 @@ xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
 
 
+
+
+
+%% TASK D - Source at (0,0,-3)
+x0 = 0; y0 = 0;  
+z_source = -3;
+f = 1000;
+omega = 2 * pi * f;
+k = omega / c;
+R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);
+p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
+
+figure(18);
+hold on;
+plot3(X(:), Y(:), zeros(size(X(:))), 'bo', 'MarkerFaceColor', 'b');
+plot3(x0, y0, z_source, 'rp', 'MarkerSize', 15, 'MarkerFaceColor', 'r');
+title('Task C: Microphone Array and Source Position (3D view)');
+xlabel('x (m)'); ylabel('y (m)'); 
+zlabel('z (m)');
+grid on;
+legend('Microphones','Source');
+view(3); axis equal;
+
+
+% SPL calculation
+p_rms = abs(p) / sqrt(2);
+SPL = 20 * log10(p_rms / 2e-5);
+
+figure(19);
+pcolor(X, Y, SPL); shading flat; colorbar;
+title('Task D: SPL (dB SPL) for source at (0,0,-3)');
+xlabel('x (m)'); ylabel('y (m)');
+
+figure(20);
+pcolor(X, Y, angle(p)); shading flat; colorbar;
+title('Task D: Phase (rad) of pressure for source at (0,0,-3)');
+xlabel('x (m)'); ylabel('y (m)');
+
+P_k = fftshift(fft2(p, N, N));
+kz = sqrt(k^2 - KX.^2 - KY.^2);
+
+figure(21);
+pcolor(KX, KY, abs(P_k)); shading flat; colorbar;
+title('Task D: Wavenumber magnitude spectrum of pressure at (0,0,-3)');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(22);
+pcolor(KX, KY, angle(P_k)); shading flat; colorbar;
+title('Task D: Wavenumber phase spectrum of pressure at (0,0,-3)');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(23);
+pcolor(KX, KY, real(kz)); shading flat; colorbar;
+title('Task D: Real part of k_z at (0,0,-3)');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(24);
+pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+title('Task D: Imag part of k_z at (0,0,-3)');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+% HAS TO BE ANALYSED
+
+
+
+
+%% TASK E - Wavenumber spectrum of normal velocity (Source at (0,0,-0.1))
+z_source = -0.1;
+f = 1000;
+omega = 2 * pi * f;
+k = omega / c;
+R = sqrt(X.^2 + Y.^2 + (0 - z_source).^2);
+p = 1j * omega * rho * Q ./ (4 * pi * R) .* exp(-1j * k * R);
+
+uz = p ./ (1j * omega * rho) .* (0 - z_source) ./ R;
+Uz_k = fftshift(fft2(uz, N, N));
+kz = sqrt(k^2 - KX.^2 - KY.^2);
+
+figure(25);
+pcolor(KX, KY, abs(Uz_k)); shading flat; colorbar;
+title('Task E: Wavenumber magnitude spectrum of normal velocity');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(26);
+pcolor(KX, KY, angle(Uz_k)); shading flat; colorbar;
+title('Task E: Wavenumber phase spectrum of normal velocity');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(27);
+pcolor(KX, KY, real(kz)); shading flat; colorbar;
+title('Task E: Real part of k_z for normal velocity');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+figure(28);
+pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+title('Task E: Imag part of k_z for normal velocity');
+xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+
+% HAS TO BE ANALYSED
