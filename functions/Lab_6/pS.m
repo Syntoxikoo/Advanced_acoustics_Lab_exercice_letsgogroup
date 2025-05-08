@@ -5,6 +5,6 @@ function p = pS(r,k,Q,a)
 
     omega = k * c;
 
-    p = 1j *  omega * rho * Q./ (4 * pi * (r-a)) .* exp(1j* k*(r-a));
+    p = 1j *  omega * rho * (a^2*Q)./ ( (r-a)) .* exp(1j* k*(r-a));
     
 end

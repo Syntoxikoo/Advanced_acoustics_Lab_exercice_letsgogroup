@@ -95,7 +95,7 @@ for ii = 1 : length(ka_a)
     ka = ka_a(ii);
     k = ka/a;
     
-    p(:,ii) = prad_sph_src(m,r,theta,k,a,"amp",true,"norm_ax",false, 'tricks',false);
+    p(:,ii) = prad_sph_src(m,r,theta,k,a,"amp",true,"norm_ax",false, 'tricks',true);
     p0(ii) =  pS(r,k,1e-3,a);
     
     p(:,ii) = p(:,ii)/p0(ii);
