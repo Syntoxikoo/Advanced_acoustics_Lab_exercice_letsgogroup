@@ -108,22 +108,22 @@ colorbar;
 title('Task B: Wavenumber spectrum (rad/m) at 1kHz');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
-figure(6);
-pcolor(KX, KY, angle(P_k)); 
-shading flat; 
-colorbar;
-title('Task B: Wavenumber spectrum phase (rad) at 1kHz');
-xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
-
-figure(7);
-pcolor(KX, KY, real(kz)); shading flat; colorbar;
-title('Task B: Real part of k_z at 1kHz');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
-
-figure(8);
-pcolor(KX, KY, imag(kz)); shading flat; colorbar;
-title('Task B: Imag part of k_z at 1kHz');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% figure(6);
+% pcolor(KX, KY, angle(P_k)); 
+% shading flat; 
+% colorbar;
+% title('Task B: Wavenumber spectrum phase (rad) at 1kHz');
+% xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
+% 
+% figure(7);
+% pcolor(KX, KY, real(kz)); shading flat; colorbar;
+% title('Task B: Real part of k_z at 1kHz');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% 
+% figure(8);
+% pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+% title('Task B: Imag part of k_z at 1kHz');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
 % Changing f=100 to f500
 f = 500;
@@ -142,44 +142,24 @@ colorbar;
 title('Task B: Wavenumber spectrum of pressure at 500Hz');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
-figure(10);
-pcolor(KX, KY, angle(P_k)); 
-shading flat; 
-colorbar;
-title('Task B: Wavenumber phase spectrum of pressure at 500Hz');
-xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
-
-figure(11);
-pcolor(KX, KY, real(kz)); shading flat; colorbar;
-title('Task B: Real part of k_z at 500 Hz');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
-
-figure(12);
-pcolor(KX, KY, imag(kz)); shading flat; colorbar;
-title('Task B: Imag part of k_z at 500 Hz');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
-
-% Analysis:
-% since the microphone array is quite close to the source we are able to
-% observe the evanescent waves as well as the traveling waves. Since the
-% source is a point source postioned in the middle of the microphone array
-% we can clearly see a circle like shape. The dot with high pressure
-% directly in the middle represents the plane wave traveling normal to the
-% surface we are obsserving. The circle around this represents the
-% spericaly from the source propagating waves as all the waves travel 
-% from the center towards the ends of our array. It can be seen that the
-% circle has a larger radius for the 1 khz signal compared to the 500 Hz
-% signal because the larger wavelength of 500 Hz results in a smaller value
-% for the wavenumbers since k^2=kx^2+ky^2+kz^2. This shows illustrades the
-% link between the radius of the seen circle to the frequency of the
-% signal. This can even better be observed in the plot of the real and
-% imaginary part of the wave spectrum. The imaginary part of kz being zero inside
-% the circle and growing outside the circle. This shows that outside of the
-% radius kx+ky>k indicating evanescent waves and inside kx+ky<k indicating
-% propagating waves.
+% figure(10);
+% pcolor(KX, KY, angle(P_k)); 
+% shading flat; 
+% colorbar;
+% title('Task B: Wavenumber phase spectrum of pressure at 500Hz');
+% xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 % 
-% the periodic artefacts seen towards larger values of kx and ky are
-% results of the truncation.
+% figure(11);
+% pcolor(KX, KY, real(kz)); shading flat; colorbar;
+% title('Task B: Real part of k_z at 500 Hz');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% 
+% figure(12);
+% pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+% title('Task B: Imag part of k_z at 500 Hz');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+
+% HAS TO BE ANALYSED
 
 
 
@@ -214,32 +194,39 @@ colorbar;
 title('Task C: Wavenumber magnitude spectrum of pressure at corner (L/2, L/2)');
 xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
-figure(15);
-pcolor(KX, KY, angle(P_k)); 
-shading flat; 
-colorbar;
-title('Task C: Wavenumber phase spectrum of pressure at corner (L/2, L/2)');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% figure(15);
+% pcolor(KX, KY, angle(P_k)); 
+% shading flat; 
+% colorbar;
+% title('Task C: Wavenumber phase spectrum of pressure at corner (L/2, L/2)');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% 
+% figure(16);
+% pcolor(KX, KY, real(kz)); shading flat; colorbar;
+% title('Task B: Real part of k_zz for cornered source');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% 
+% figure(17);
+% pcolor(KX, KY, imag(kz)); shading flat; colorbar;
+% title('Task B: Imag part of k_z for cornered source');
+% xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
 
-figure(16);
-pcolor(KX, KY, real(kz)); shading flat; colorbar;
-title('Task B: Real part of k_zz for cornered source');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
+% Analasis:
+% since the microphone array is quite close to the source we are able to
+% observe the evanescent waves as well as the traveling waves. Since the
+% source is a point source postioned in the middle of the microphone array
+% we can clearly see a circle like shape. The dot with high pressure
+% directly in the middle represents the plane wave traveling normal to the
+% surface we are obsserving. The circle around this represents the
+% spericaly from the source propagating waves as all the waves travel 
+% from the center towards the ends of our array. It can be seen that the
+% circle has a larger radius for the 1 khz signal compared to the 500 Hz
+% signal because the larger wavelength of 500 Hz results in a smaller value
+% for the wavenumbers since k^2=kx^2+ky^2+kz^2. 
+% 
+% the periodic artefacts seen towards larger values of kx and ky are
+% results of the truncation.
 
-figure(17);
-pcolor(KX, KY, imag(kz)); shading flat; colorbar;
-title('Task B: Imag part of k_z for cornered source');
-xlabel('k_x [rad/m]'); ylabel('k_y [rad/m]');
-
-
-% Analysis
-% Now in the case of the source being positioned in a corner of our array
-% all the planewaves are traveling diagonal towards the negativ kx and ky.
-% Compared to the firs wavenumber spectrum in figure 5 it is just one
-% corner of the circle without the center dot. Showing a similar radius
-% from 0 but only propagating in the negativ x/y direction.
-% Again the artifacts which look like a repetition of the shape are due to
-% the truncation error.
 
 
 
@@ -302,15 +289,8 @@ pcolor(KX, KY, imag(kz)); shading flat; colorbar;
 title('Task D: Imag part of k_z at (0,0,-3)');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
-
 % Analysis
-% In this case the source is positioned in the center again but the source
-% is 3 m away from the microphone array indicating that it is more or less
-% n the farfiel. This far from the source all the evanescent waves have
-% already decayed alot indicating that for the microphone arry it looks in
-% the wavenumber spectrum like a plane wave which is shown by a dot in the
-% middle. By comparing the SPL values from figure 3 and figure 19 we can
-% also see the level decay caused by the distance.
+
 
 
 
@@ -347,8 +327,7 @@ title('Task E: Imag part of k_z for normal velocity');
 xlabel('k_x (rad/m)'); ylabel('k_y (rad/m)');
 
 % HAS TO BE ANALYSED
-% here I'm a bit lost but i think the point is that they are somewhat out
-% of phase I guess ??
+
 
 
 
